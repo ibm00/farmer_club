@@ -1,8 +1,9 @@
 import 'package:farmer_club/constants/styles.dart';
+import 'package:farmer_club/presentation/shared_widgets/button_widget.dart';
 import 'package:farmer_club/presentation/shared_widgets/icons_wrapper.dart';
 import 'package:flutter/material.dart';
 
-import 'presentation/shared_widgets/textFieldWidget.dart';
+import 'presentation/shared_widgets/text_field_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,7 +55,27 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  // SizedBox(width: 100),
+                  Expanded(
+                    child: ButtonWidget(
+                      title: 'photo',
+                      onButtonPressed: () {},
+                      // width: 92,
+                      // hight: 32,
+                      // color: Color(0xffF8F9FB),
+                      // borderRadius: 10,
+                      // textStyle: kTextStyleReg11,
+                      // textColor: Color(0xff444D6E),
+                      // elevation: 5,
+                      // icon: Icon(Icons.add, size: 12, color: Color(0xff444D6E)),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
