@@ -1,4 +1,4 @@
-import 'package:farmer_club/constants/styles.dart';
+import 'package:farmer_club/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 
 class IconWrapper extends StatelessWidget {

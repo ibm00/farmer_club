@@ -1,9 +1,9 @@
-import 'package:farmer_club/constants/styles.dart';
 import 'package:farmer_club/presentation/shared_widgets/button_widget.dart';
 import 'package:farmer_club/presentation/shared_widgets/icons_wrapper.dart';
 import 'package:flutter/material.dart';
 
 import 'presentation/shared_widgets/text_field_widget.dart';
+import 'utils/constants/styles.dart';
 
 void main() {
   runApp(const MyApp());
