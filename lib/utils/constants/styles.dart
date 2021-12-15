@@ -19,3 +19,4 @@ const kTextStyleReg18 = TextStyle(fontSize: 18);
 const kTextStyleWhiteBold18 =
     TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white);
 const kTextStyleReg24 = TextStyle(fontSize: 24);
+const kTextStyleBold26 = TextStyle(fontSize: 26, fontWeight: FontWeight.bold);

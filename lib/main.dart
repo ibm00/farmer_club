@@ -2,6 +2,7 @@ import 'package:farmer_club/presentation/shared_widgets/button_widget.dart';
 import 'package:farmer_club/presentation/shared_widgets/icons_wrapper.dart';
 import 'package:flutter/material.dart';
 
+import 'presentation/shared_widgets/app_bar_widget.dart';
 import 'presentation/shared_widgets/text_field_widget.dart';
 import 'utils/constants/styles.dart';
 
@@ -28,9 +29,13 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Drawer(
+        child: Text('Farmer Club'),
+      ),
       backgroundColor: kBackgroundColor,
-      appBar: AppBar(
-        title: const Text('Hello there'),
+      appBar: const AppBarWidget(
+        title: 'Farmer Club',
+        hasDrawer: true,
       ),
       body: Center(
         child: Padding(
@@ -63,7 +68,11 @@ class MyHomePage extends StatelessWidget {
                   Expanded(
                     child: ButtonWidget(
                       title: 'photo',
-                      onButtonPressed: () {},
+                      onButtonPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => MyHomePage()),
+                        );
+                      },
                       // width: 92,
                       // hight: 32,
                       // color: Color(0xffF8F9FB),
