@@ -1,7 +1,9 @@
 import 'package:farmer_club/presentation/shared_widgets/button_widget.dart';
 import 'package:farmer_club/presentation/shared_widgets/icons_wrapper.dart';
+import 'package:farmer_club/presentation/shared_widgets/post_box_widget.dart';
 import 'package:flutter/material.dart';
 
+import 'data/models/post_model.dart';
 import 'presentation/shared_widgets/app_bar_widget.dart';
 import 'presentation/shared_widgets/text_field_widget.dart';
 import 'utils/constants/styles.dart';
@@ -29,20 +31,15 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(
-        child: Text('Farmer Club'),
-      ),
+      drawer: const Drawer(child: Text('Farmer Club')),
       backgroundColor: kBackgroundColor,
-      appBar: const AppBarWidget(
-        title: 'Farmer Club',
-        hasDrawer: true,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+      appBar: const AppBarWidget(title: 'Farmer Club', hasDrawer: true),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 15),
               Row(
                 children: [
                   const IconWrapper(Icons.person_outline_rounded),
@@ -62,29 +59,59 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              Row(
-                children: [
-                  // SizedBox(width: 100),
-                  Expanded(
-                    child: ButtonWidget(
-                      title: 'photo',
-                      onButtonPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => MyHomePage()),
-                        );
-                      },
-                      // width: 92,
-                      // hight: 32,
-                      // color: Color(0xffF8F9FB),
-                      // borderRadius: 10,
-                      // textStyle: kTextStyleReg11,
-                      // textColor: Color(0xff444D6E),
-                      // elevation: 5,
-                      // icon: Icon(Icons.add, size: 12, color: Color(0xff444D6E)),
-                    ),
-                  ),
-                ],
+              PostBoxWidget(
+                Post(
+                  isMyPost: true,
+                  postImageUrl:
+                      'https://images.ctfassets.net/hrltx12pl8hq/euxCffMOPuxAnPLcN3nzW/eb14f1deaa1e6edce8981124825aefb9/ULOHP.png?fit=fill&w=800&h=400',
+                  commentsNum: 17,
+                  userName: 'Ibrahem Saad',
+                  userImageUrl:
+                      'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                  postDate: '8 Nov.',
+                  postText:
+                      'Believe in yourself, take on your challenges, dig deep within yourself to conquer fears. Never let anyone bring you down. You got to keep going.',
+                ),
               ),
+              const SizedBox(height: 10),
+              PostBoxWidget(
+                Post(
+                  isMyPost: false,
+                  postImageUrl:
+                      'https://images.ctfassets.net/hrltx12pl8hq/euxCffMOPuxAnPLcN3nzW/eb14f1deaa1e6edce8981124825aefb9/ULOHP.png?fit=fill&w=800&h=400',
+                  commentsNum: 17,
+                  userName: 'Ibrahem Saad',
+                  userImageUrl:
+                      'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                  postDate: '8 Nov.',
+                  postText:
+                      'Believe in yourself, take on your challenges, dig deep within yourself to conquer fears. Never let anyone bring you down. You got to keep going.',
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Row(
+              //   children: [
+              //     // SizedBox(width: 100),
+              //     Expanded(
+              //       child: ButtonWidget(
+              //         title: 'photo',
+              //         onButtonPressed: () {
+              //           Navigator.of(context).push(
+              //             MaterialPageRoute(builder: (context) => MyHomePage()),
+              //           );
+              //         },
+              //         // width: 92,
+              //         // hight: 32,
+              //         // color: Color(0xffF8F9FB),
+              //         // borderRadius: 10,
+              //         // textStyle: kTextStyleReg11,
+              //         // textColor: Color(0xff444D6E),
+              //         // elevation: 5,
+              //         // icon: Icon(Icons.add, size: 12, color: Color(0xff444D6E)),
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
