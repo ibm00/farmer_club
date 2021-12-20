@@ -1,4 +1,5 @@
 import 'package:farmer_club/data/models/post_model.dart';
+import 'package:farmer_club/presentation/shared_widgets/image_avatar_widget.dart';
 import 'package:farmer_club/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,9 @@ class PostBoxWidget extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(_post.userImageUrl),
+                ImageAvatarWidget(
+                  imageUrl: _post.userImageUrl,
+                  // borderThikness: 2,
                 ),
                 const SizedBox(width: 10),
                 Column(

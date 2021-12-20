@@ -20,8 +20,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: const MaterialColor(
+            0xff299A0B,
+            <int, Color>{
+              50: kPrimaryColor,
+              100: kPrimaryColor,
+              200: kPrimaryColor,
+              300: kPrimaryColor,
+              400: kPrimaryColor,
+              500: kPrimaryColor,
+              600: kPrimaryColor,
+              700: kPrimaryColor,
+              800: kPrimaryColor,
+              900: kPrimaryColor,
+            },
+          ),
+          primaryColor: kPrimaryColor),
       home: MyHomePage(),
     );
   }
@@ -34,9 +48,9 @@ class MyHomePage extends StatelessWidget {
       drawer: const Drawer(child: Text('Farmer Club')),
       backgroundColor: kBackgroundColor,
       appBar: const AppBarWidget(title: 'Farmer Club', hasDrawer: true),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
               const SizedBox(height: 15),
