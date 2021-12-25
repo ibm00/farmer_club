@@ -1,6 +1,6 @@
-import 'package:farmer_club/data/models/post_model.dart';
-import 'package:farmer_club/presentation/shared_widgets/image_avatar_widget.dart';
-import 'package:farmer_club/utils/constants/styles.dart';
+import '../../data/models/post_model.dart';
+import 'image_avatar_widget.dart';
+import '../../utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 
 class PostBoxWidget extends StatelessWidget {
@@ -95,7 +95,6 @@ class PostBoxWidget extends StatelessWidget {
   }
 
   showPopupMenu(BuildContext context, TapDownDetails details) {
-    print('in');
     showMenu<int>(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),

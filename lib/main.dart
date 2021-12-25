@@ -1,16 +1,21 @@
-import 'package:farmer_club/presentation/shared_widgets/button_widget.dart';
-import 'package:farmer_club/presentation/shared_widgets/icons_wrapper.dart';
-import 'package:farmer_club/presentation/shared_widgets/post_box_widget.dart';
+import 'presentation/shared_widgets/button_widget.dart';
+import 'presentation/shared_widgets/icons_wrapper.dart';
+import 'presentation/shared_widgets/post_box_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'data/models/post_model.dart';
 import 'presentation/shared_widgets/app_bar_widget.dart';
 import 'presentation/shared_widgets/text_field_widget.dart';
 import 'utils/constants/styles.dart';
+import 'helpers/routes.dart';
+import 'package:device_preview/device_preview.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(
+      DevicePreview(
+        enabled: false,
+        builder: (context) => const MyApp(), // Wrap your app
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -20,23 +25,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          primarySwatch: const MaterialColor(
-            0xff299A0B,
-            <int, Color>{
-              50: kPrimaryColor,
-              100: kPrimaryColor,
-              200: kPrimaryColor,
-              300: kPrimaryColor,
-              400: kPrimaryColor,
-              500: kPrimaryColor,
-              600: kPrimaryColor,
-              700: kPrimaryColor,
-              800: kPrimaryColor,
-              900: kPrimaryColor,
-            },
-          ),
-          primaryColor: kPrimaryColor),
-      home: MyHomePage(),
+        primarySwatch: const MaterialColor(
+          0xff299A0B,
+          <int, Color>{
+            50: kPrimaryColor,
+            100: kPrimaryColor,
+            200: kPrimaryColor,
+            300: kPrimaryColor,
+            400: kPrimaryColor,
+            500: kPrimaryColor,
+            600: kPrimaryColor,
+            700: kPrimaryColor,
+            800: kPrimaryColor,
+            900: kPrimaryColor,
+          },
+        ),
+        primaryColor: kPrimaryColor,
+        fontFamily: 'Nunito',
+      ),
+      // home: MyHomePage(),
+      routes: RoutesHelper.getRoutes(context),
     );
   }
 }
