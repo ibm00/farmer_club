@@ -5,9 +5,11 @@ class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget({
     required this.validator,
     required this.onSaving,
+    required this.hintText,
   });
   final String? Function(String?) validator;
   final String? Function(String?) onSaving;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class TextFieldWidget extends StatelessWidget {
         border: InputBorder.none,
         contentPadding:
             const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-        hintText: 'Name',
+        hintText: hintText,
         hintStyle: kTextStyleGerybold16,
         focusedBorder: _outlineBorder,
         enabledBorder: _outlineBorder,
