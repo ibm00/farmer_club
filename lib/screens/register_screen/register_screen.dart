@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../constants/styles.dart';
+import '../../../utils/constants/styles.dart';
 import '../../utils/shared_widgets/loading_widget.dart';
 import '../login_screen/login_screen.dart';
 import 'components/register_form.dart';

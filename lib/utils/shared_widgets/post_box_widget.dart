@@ -1,4 +1,5 @@
-import '../../constants/styles.dart';
+import 'package:farmer_club/utils/constants/styles.dart';
+
 import '../../data/models/post_model.dart';
 import 'image_avatar_widget.dart';
 import 'package:flutter/material.dart';
