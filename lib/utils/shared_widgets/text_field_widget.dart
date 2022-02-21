@@ -1,22 +1,25 @@
-import '../../utils/constants/styles.dart';
+import '../../constants/styles.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget({
     required this.validator,
-    required this.onSaving,
     required this.hintText,
+    this.onSaving,
+    this.controller,
   });
-  final String? Function(String?) validator;
-  final String? Function(String?) onSaving;
+  final Function(String?) validator;
+  final Function(String?)? onSaving;
   final String hintText;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (v) => validator(v),
-      onSaved: (v) => onSaving(v),
+      onSaved: (v) => onSaving == null ? null : onSaving!(v),
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.grey[100],

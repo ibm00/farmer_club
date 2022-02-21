@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart';
 
+const Map<int, Color> kPrimaryColorMap = {
+  50: kPrimaryColor,
+  100: kPrimaryColor,
+  200: kPrimaryColor,
+  300: kPrimaryColor,
+  400: kPrimaryColor,
+  500: kPrimaryColor,
+  600: kPrimaryColor,
+  700: kPrimaryColor,
+  800: kPrimaryColor,
+  900: kPrimaryColor,
+};
 //Colors
 const kPrimaryColor = Color(0xff299A0B);
 const kLightPrimaryColor = Color(0xff99EB73);

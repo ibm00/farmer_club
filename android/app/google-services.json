@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "917609188988",
+    "project_id": "farmer-club-19b29",
+    "storage_bucket": "farmer-club-19b29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917609188988:android:41949c91d62a0c2ceec3f9",
+        "android_client_info": {
+          "package_name": "com.example.farmer_club"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "917609188988-hdhuc5f0gou81dqj3645p3fpqdm01kfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2ub8Y-8BNOtGLLPYedxnXUg0KOPKAOa4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "917609188988-hdhuc5f0gou81dqj3645p3fpqdm01kfd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

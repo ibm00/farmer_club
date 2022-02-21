@@ -1,4 +1,4 @@
-import '../../../utils/constants/styles.dart';
+import '../../../constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -6,6 +6,7 @@ import 'components/app_logo.dart';
 import 'components/app_name.dart';
 
 class SplashScreen extends StatelessWidget {
+  static const String routeName = "/splash_screen";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,12 +1,19 @@
-import 'package:farmer_club/presentation/shared_widgets/button_widget.dart';
-import 'package:farmer_club/presentation/shared_widgets/icons_wrapper.dart';
-import 'package:farmer_club/presentation/shared_widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RegisterForm extends StatelessWidget {
+import '../../../../utils/helpers/validators.dart';
+import '../../../utils/shared_widgets/button_widget.dart';
+import '../../../utils/shared_widgets/icons_wrapper.dart';
+import '../../../utils/shared_widgets/text_field_widget.dart';
+import '../register_provider.dart';
+
+class RegisterForm extends ConsumerWidget {
+  // final _formKey = GlobalKey<FormState>();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final registerProv = ref.watch(registerProvider);
     return Form(
+      key: registerProv.formKey,
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -17,8 +24,11 @@ class RegisterForm extends StatelessWidget {
               Expanded(
                 child: TextFieldWidget(
                   hintText: 'Name',
-                  onSaving: (v) {},
-                  validator: (v) {},
+                  onSaving: (v) {
+                    registerProv.setName = v!;
+                  },
+                  validator: (v) =>
+                      ValidatorsHelper.isEmptyValidator(v!.trim()),
                 ),
               )
             ],
@@ -31,8 +41,10 @@ class RegisterForm extends StatelessWidget {
               Expanded(
                 child: TextFieldWidget(
                   hintText: 'Email',
-                  onSaving: (v) {},
-                  validator: (v) {},
+                  onSaving: (v) {
+                    registerProv.setEmail = v!;
+                  },
+                  validator: (v) => ValidatorsHelper.emailValidator(v!.trim()),
                 ),
               )
             ],
@@ -44,9 +56,13 @@ class RegisterForm extends StatelessWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: TextFieldWidget(
+                  controller: registerProv.passController,
                   hintText: 'Password',
-                  onSaving: (v) {},
-                  validator: (v) {},
+                  onSaving: (v) {
+                    registerProv.setPassword = v!;
+                  },
+                  validator: (v) =>
+                      ValidatorsHelper.passwordValidator(v!.trim()),
                 ),
               )
             ],
@@ -60,14 +76,20 @@ class RegisterForm extends StatelessWidget {
                 child: TextFieldWidget(
                   hintText: 'Retype Password',
                   onSaving: (v) {},
-                  validator: (v) {},
+                  validator: (v) => ValidatorsHelper.rePasswordValidator(
+                    v!,
+                    registerProv.passController.text,
+                  ),
                 ),
               )
             ],
           ),
           const SizedBox(height: 30),
           ButtonWidget(
-            onButtonPressed: () {},
+            onButtonPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+              registerProv.onRegisterPressed(context);
+            },
             title: 'Rigester',
           )
         ],

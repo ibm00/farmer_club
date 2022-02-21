@@ -11,7 +11,7 @@ class Post {
     required this.userImageUrl,
     required this.postDate,
     required this.commentsNum,
-    required this.isMyPost,
+    this.isMyPost = false,
     this.postText,
     this.postImageUrl,
   });

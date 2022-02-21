@@ -1,6 +1,6 @@
+import '../../constants/styles.dart';
 import '../../data/models/post_model.dart';
 import 'image_avatar_widget.dart';
-import '../../utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 
 class PostBoxWidget extends StatelessWidget {
