@@ -23,7 +23,7 @@ class PostBoxWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ImageAvatarWidget(
-                  imageUrl: _post.userImageUrl,
+                  imageUrl: _post.userImgUrl,
                   // borderThikness: 2,
                 ),
                 const SizedBox(width: 10),
@@ -46,14 +46,14 @@ class PostBoxWidget extends StatelessWidget {
                 ),
               ],
             ),
-            if (_post.postText != null) const SizedBox(height: 15),
-            if (_post.postText != null)
+            if (_post.postText != "") const SizedBox(height: 15),
+            if (_post.postText != "")
               Text(
-                _post.postText!,
+                _post.postText,
                 style: kTextStylePost13,
               ),
             const SizedBox(height: 10),
-            if (_post.postImageUrl != null)
+            if (_post.userImgUrl != "")
               ClipRRect(
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(35),
@@ -61,7 +61,7 @@ class PostBoxWidget extends StatelessWidget {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(35),
                 ),
-                child: Image.network(_post.postImageUrl!),
+                child: Image.network(_post.userImgUrl),
               ),
             const SizedBox(height: 15),
             InkWell(
