@@ -23,7 +23,7 @@ class LoginForm extends ConsumerWidget {
               Expanded(
                 child: TextFieldWidget(
                   controller: _loginProv.emailController,
-                  hintText: 'Email',
+                  hintText: 'البريد الإلكتروني',
                   validator: (v) => ValidatorsHelper.emailValidator(v!.trim()),
                 ),
               )
@@ -37,7 +37,7 @@ class LoginForm extends ConsumerWidget {
               Expanded(
                 child: TextFieldWidget(
                   controller: _loginProv.passwordController,
-                  hintText: 'Password',
+                  hintText: 'كلمة المرور',
                   validator: (v) =>
                       ValidatorsHelper.passwordValidator(v!.trim()),
                 ),
@@ -50,7 +50,7 @@ class LoginForm extends ConsumerWidget {
               FocusManager.instance.primaryFocus?.unfocus();
               _loginProv.onLoginPressed(context);
             },
-            title: 'Login',
+            title: 'تسجيل الدخول',
           )
         ],
       ),

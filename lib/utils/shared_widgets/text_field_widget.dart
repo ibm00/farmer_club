@@ -24,8 +24,11 @@ class TextFieldWidget extends StatelessWidget {
         filled: true,
         fillColor: Colors.grey[100],
         border: InputBorder.none,
-        contentPadding:
-            const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+        contentPadding: const EdgeInsetsDirectional.only(
+          start: 14.0,
+          bottom: 8.0,
+          top: 8.0,
+        ),
         hintText: hintText,
         hintStyle: kTextStyleGerybold16,
         focusedBorder: _outlineBorder,

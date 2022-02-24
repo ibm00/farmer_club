@@ -23,7 +23,7 @@ class RegisterForm extends ConsumerWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: TextFieldWidget(
-                  hintText: 'Name',
+                  hintText: 'الاسم',
                   onSaving: (v) {
                     registerProv.setName = v!;
                   },
@@ -40,7 +40,7 @@ class RegisterForm extends ConsumerWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: TextFieldWidget(
-                  hintText: 'Email',
+                  hintText: 'البريد الإلكتروني',
                   onSaving: (v) {
                     registerProv.setEmail = v!;
                   },
@@ -57,7 +57,7 @@ class RegisterForm extends ConsumerWidget {
               Expanded(
                 child: TextFieldWidget(
                   controller: registerProv.passController,
-                  hintText: 'Password',
+                  hintText: 'كلمة المرور',
                   onSaving: (v) {
                     registerProv.setPassword = v!;
                   },
@@ -74,7 +74,7 @@ class RegisterForm extends ConsumerWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: TextFieldWidget(
-                  hintText: 'Retype Password',
+                  hintText: 'أعد كتابة كلمة المرور',
                   onSaving: (v) {},
                   validator: (v) => ValidatorsHelper.rePasswordValidator(
                     v!,
@@ -90,7 +90,7 @@ class RegisterForm extends ConsumerWidget {
               FocusManager.instance.primaryFocus?.unfocus();
               registerProv.onRegisterPressed(context);
             },
-            title: 'Rigester',
+            title: 'تسجيل',
           )
         ],
       ),

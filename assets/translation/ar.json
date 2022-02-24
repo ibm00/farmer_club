@@ -1,0 +1,5 @@
+{
+  "VALIDATION_ERROR": "هذا الحقل مطلوب",
+  "EMAIL_VALIDATION_ERROR_MESSAGE": "أدخل بريد إلكتروني صالح",
+  "email": "البريد الإلكتروني"
+}

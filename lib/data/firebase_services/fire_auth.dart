@@ -17,10 +17,8 @@ class FireAuth {
       _saveUserDataToFirebase(user, userCredential);
       return true;
     } on FirebaseAuthException catch (e) {
-      print(e);
       throw (e.code);
     } catch (e) {
-      print("signin error$e");
       return false;
     }
   }
@@ -34,10 +32,8 @@ class FireAuth {
       );
       return true;
     } on FirebaseAuthException catch (e) {
-      print(e);
       throw (e.code);
     } catch (e) {
-      print("signin error$e");
       return false;
     }
   }
@@ -50,7 +46,6 @@ class FireAuth {
           .pushNamedAndRemoveUntil(LoginScreen.routeName, (route) => false);
       return true;
     } catch (e) {
-      print("sinout error$e");
       return false;
     }
   }
@@ -78,7 +73,6 @@ class FireAuth {
       "name": user.name,
       "imageUrl": user.imageUrl,
     });
-    print("user data saved");
   }
 
   // static Future<void> sign

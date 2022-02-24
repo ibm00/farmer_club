@@ -12,7 +12,7 @@ class RegisterScreen extends StatelessWidget {
   static const String routeName = '/register-screen';
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
         child: Consumer(builder: (context, ref, _) {
@@ -30,9 +30,13 @@ class RegisterScreen extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  const Text('Let\'s Join Our Community',
-                      style: kTextStyleReg24),
+                  const SizedBox(height: 20),
+                  Text(
+                    'أنضم الآن إلى مجتمعنا',
+                    style: kTextStyleReg24.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 13),
                     child: RegisterForm(),
@@ -42,7 +46,7 @@ class RegisterScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Already have an account? ',
+                        'لديك حساب بالفعل؟ ',
                         style: kTextStyleReg13,
                       ),
                       InkWell(
@@ -50,8 +54,10 @@ class RegisterScreen extends StatelessWidget {
                           Navigator.of(context)
                               .pushReplacementNamed(LoginScreen.routeName);
                         },
-                        child: const Text('Login now',
-                            style: kTextStyleGreenReg13),
+                        child: const Text(
+                          'تسجيل الدخول',
+                          style: kTextStyleGreenReg13,
+                        ),
                       ),
                     ],
                   ),

@@ -1,24 +1,32 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:farmer_club/utils/helpers/routes.dart';
+import 'package:farmer_club/utils/translation/codegen_loader.g.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'screens/roote_screen/roote_screen.dart';
 import 'utils/constants/styles.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
 
   runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) =>
-          const ProviderScope(child: MyApp()), // Wrap your app
+    EasyLocalization(
+      useOnlyLangCode: true,
+      startLocale: const Locale('ar'),
+      assetLoader: const CodegenLoader(),
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translation',
+      fallbackLocale: const Locale('ar'),
+      child: DevicePreview(
+        enabled: false,
+        builder: (context) => const ProviderScope(
+          child: MyApp(),
+        ),
+      ),
     ),
   );
 }
@@ -28,8 +36,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // context.setLocale(const Locale('ar'));
     return Consumer(
       builder: (context, ref, child) => MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -40,13 +52,6 @@ class MyApp extends StatelessWidget {
           primaryColor: kPrimaryColor,
           fontFamily: 'Nunito',
         ),
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        locale: const Locale('ar'),
-        // home: MyHomePage(),
         initialRoute: RooteScreen.routeName,
         onGenerateRoute: RoutesHelper.generateRoute,
       ),

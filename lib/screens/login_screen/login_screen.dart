@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Welcome to Farmer\nClub',
+                    'أهلا بك في\nFarmer Club',
                     style: kTextStyleReg24,
                     textAlign: TextAlign.center,
                   ),
@@ -39,14 +39,13 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Don\'t have an account? ',
-                          style: kTextStyleReg13),
+                      const Text('ليس لديك حساب؟ ', style: kTextStyleReg13),
                       InkWell(
                         onTap: () {
                           Navigator.of(context)
                               .pushReplacementNamed(RegisterScreen.routeName);
                         },
-                        child: const Text('Register now',
+                        child: const Text('إنشاء حساب جديد',
                             style: kTextStyleGreenReg13),
                       ),
                     ],

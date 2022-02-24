@@ -1,0 +1,5 @@
+{
+  "VALIDATION_ERROR": "This field is required",
+  "EMAIL_VALIDATION_ERROR_MESSAGE": "Enter a valid email",
+  "email": "email"
+}
