@@ -6,35 +6,35 @@ import 'package:flutter/material.dart';
 import '../../screens/login_screen/login_screen.dart';
 
 class FireAuth {
-  static Future<bool> signUp(UserModel user, String password) async {
+  static Future<String?> signUp(UserModel user, String password) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     try {
       final UserCredential userCredential =
           await auth.createUserWithEmailAndPassword(
-        email: user.email,
+        email: user.email ?? "",
         password: password,
       );
       _saveUserDataToFirebase(user, userCredential);
-      return true;
+      return userCredential.user!.uid;
     } on FirebaseAuthException catch (e) {
       throw (e.code);
     } catch (e) {
-      return false;
+      return null;
     }
   }
 
-  static Future<bool> signin(String email, String password) async {
+  static Future<String?> signin(String email, String password) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     try {
-      await auth.signInWithEmailAndPassword(
+      final userCredential = await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return true;
+      return userCredential.user == null ? null : userCredential.user!.uid;
     } on FirebaseAuthException catch (e) {
       throw (e.code);
     } catch (e) {
-      return false;
+      return null;
     }
   }
 

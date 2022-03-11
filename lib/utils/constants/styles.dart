@@ -23,6 +23,7 @@ const kGeryPurpleColor = Color(0xff817889);
 
 //Text Styles
 const kTextStyleReg11 = TextStyle(fontSize: 11);
+const kTextStyleRegGery13 = TextStyle(fontSize: 13, color: kGeryPurpleColor);
 const kTextStyleReg13 = TextStyle(fontSize: 13);
 const kTextStyleGreenReg13 = TextStyle(fontSize: 13, color: kPrimaryTextColor);
 const kTextStyleReg16 = TextStyle(fontSize: 16);

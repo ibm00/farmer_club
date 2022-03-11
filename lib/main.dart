@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'screens/roote_screen/roote_screen.dart';
+import 'screens/root_screen/root_screen.dart';
 import 'utils/constants/styles.dart';
 
 Future<void> main() async {

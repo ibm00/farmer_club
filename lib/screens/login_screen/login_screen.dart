@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../utils/constants/styles.dart';
-import '../../utils/shared_widgets/loading_widget.dart';
+import '../../utils/shared_widgets/top_loading_widget.dart';
 import '../register_screen/register_screen.dart';
 import 'components/login_form.dart';
 import 'login_screen_provider.dart';
@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 25),
                 ],
               ),
-              if (ref.watch(loginProvider).isLoading) const LoadingWidget()
+              if (ref.watch(loginProvider).isLoading) const TopLoadingWidget()
             ],
           );
         }),

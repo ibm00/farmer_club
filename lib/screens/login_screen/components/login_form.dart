@@ -46,6 +46,7 @@ class LoginForm extends ConsumerWidget {
           ),
           const SizedBox(height: 40),
           ButtonWidget(
+            width: double.infinity,
             onButtonPressed: () {
               FocusManager.instance.primaryFocus?.unfocus();
               _loginProv.onLoginPressed(context);

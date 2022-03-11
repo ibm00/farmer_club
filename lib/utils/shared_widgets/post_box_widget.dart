@@ -1,3 +1,7 @@
+import 'dart:ffi';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:farmer_club/screens/comments_screen.dart/comments_screen.dart';
 import 'package:farmer_club/utils/constants/styles.dart';
 
 import '../../data/models/post_model.dart';
@@ -6,8 +10,9 @@ import 'package:flutter/material.dart';
 
 class PostBoxWidget extends StatelessWidget {
   final Post _post;
+  final void Function(BuildContext, String)? deletePostFun;
 
-  const PostBoxWidget(this._post);
+  const PostBoxWidget(this._post, {this.deletePostFun});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -18,12 +23,14 @@ class PostBoxWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 22),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ImageAvatarWidget(
-                  imageUrl: _post.userImgUrl,
+                  imageUrl: _post.userImgUrl ?? "",
                   // borderThikness: 2,
                 ),
                 const SizedBox(width: 10),
@@ -36,21 +43,29 @@ class PostBoxWidget extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                InkWell(
-                  onTap: () {},
-                  onTapDown: (details) => showPopupMenu(context, details),
-                  child: const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: Colors.grey,
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: InkWell(
+                    onTap: () {},
+                    onTapDown: (details) => showPopupMenu(context, details),
+                    child: const Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ],
             ),
-            if (_post.postText != "") const SizedBox(height: 15),
             if (_post.postText != "")
-              Text(
-                _post.postText,
-                style: kTextStylePost13,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 15),
+                  Text(
+                    _post.postText,
+                    style: kTextStylePost13,
+                  ),
+                ],
               ),
             const SizedBox(height: 10),
             if (_post.userImgUrl != "")
@@ -61,7 +76,7 @@ class PostBoxWidget extends StatelessWidget {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(35),
                 ),
-                child: Image.network(_post.userImgUrl),
+                child: CachedNetworkImage(imageUrl: _post.userImgUrl ?? ""),
               ),
             const SizedBox(height: 15),
             InkWell(
@@ -70,7 +85,10 @@ class PostBoxWidget extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      //TODO: Navigate To Comments Screen
+                      Navigator.of(context).pushNamed(
+                        CommentsScreen.routeName,
+                        arguments: _post.docId,
+                      );
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -130,6 +148,7 @@ class PostBoxWidget extends StatelessWidget {
           case 2:
             {
               //Delelte Function
+              deletePostFun!(context, _post.docId!);
             }
             break;
         }

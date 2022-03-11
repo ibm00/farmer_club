@@ -86,6 +86,7 @@ class RegisterForm extends ConsumerWidget {
           ),
           const SizedBox(height: 30),
           ButtonWidget(
+            width: double.infinity,
             onButtonPressed: () {
               FocusManager.instance.primaryFocus?.unfocus();
               registerProv.onRegisterPressed(context);

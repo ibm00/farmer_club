@@ -3,22 +3,25 @@ import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget({
-    required this.validator,
-    required this.hintText,
+    this.validator,
+    this.hintText,
     this.onSaving,
     this.controller,
+    this.isLongField = false,
   });
-  final Function(String?) validator;
+  final Function(String?)? validator;
   final Function(String?)? onSaving;
-  final String hintText;
+  final String? hintText;
   final TextEditingController? controller;
+  final bool isLongField;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (v) => validator(v),
+      validator: (v) => validator == null ? null : validator!(v),
+      maxLines: isLongField ? 4 : 1,
       onSaved: (v) => onSaving == null ? null : onSaving!(v),
       decoration: InputDecoration(
         filled: true,

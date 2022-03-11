@@ -1,8 +1,10 @@
 import 'package:farmer_club/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 
-class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({Key? key}) : super(key: key);
+import 'circular_loading_widget.dart';
+
+class TopLoadingWidget extends StatelessWidget {
+  const TopLoadingWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,13 +13,7 @@ class LoadingWidget extends StatelessWidget {
       width: size.width,
       height: size.height,
       color: Colors.black38,
-      child: const Center(
-        child: SizedBox(
-          width: 50,
-          height: 50,
-          child: CircularProgressIndicator(color: kPrimaryColor),
-        ),
-      ),
+      child: const CircularLoadingWidget(),
     );
   }
 }

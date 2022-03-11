@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../home_screen/home_screen.dart';
 import '../login_screen/login_screen.dart';
 import '../splash_screen/splash_screen.dart';
-import 'roote_screen_providers.dart';
+import 'root_screen_providers.dart';
 
 class RooteScreen extends ConsumerWidget {
   static const routeName = "/roote-screen";
