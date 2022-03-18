@@ -1,8 +1,10 @@
 import 'package:farmer_club/screens/home_screen/home_provider.dart';
 import 'package:farmer_club/utils/shared_widgets/app_bar_widget.dart';
+import 'package:farmer_club/utils/shared_widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../data/providers/posts_provider.dart';
 import '../../utils/shared_widgets/circular_loading_widget.dart';
 import '../../utils/shared_widgets/post_box_widget.dart';
 import '../../utils/shared_widgets/add_post_card.dart';
@@ -18,11 +20,12 @@ class HomeScreen extends ConsumerWidget {
       addingPostProvider.select((value) => value.isLoading),
     );
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: const AppBarWidget(title: 'الرئيسية', hasDrawer: true),
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -31,7 +34,7 @@ class HomeScreen extends ConsumerWidget {
                   const SizedBox(height: 20),
                   Consumer(
                     builder: (context, ref, _) {
-                      final homePostsProv = ref.watch(homePostsProvider);
+                      final homePostsProv = ref.watch(postsProvider(null));
                       return homePostsProv.when(
                         data: (posts) {
                           return ListView.builder(

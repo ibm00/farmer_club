@@ -1,11 +1,6 @@
-import 'package:farmer_club/data/firebase_services/fire_auth.dart';
-import 'package:farmer_club/data/providers/user_data_provider.dart';
 import 'package:farmer_club/screens/home_screen/home_provider.dart';
 import 'package:farmer_club/utils/shared_widgets/button_widget.dart';
-import 'package:farmer_club/utils/shared_widgets/circular_loading_widget.dart';
 import 'package:farmer_club/utils/shared_widgets/image_avatar_widget.dart';
-import 'package:farmer_club/utils/shared_widgets/text_field_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

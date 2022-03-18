@@ -6,7 +6,7 @@ class Post {
   late String userId;
   String? userImgUrl;
   late String userName;
-  String? docId;
+  String? postId;
   late String postDate;
   String? createdAt;
   late bool isMyPost;
@@ -17,7 +17,7 @@ class Post {
     required this.userId,
     required this.userImgUrl,
     required this.userName,
-    this.docId,
+    this.postId,
     required this.postDate,
     this.createdAt,
   }) {
@@ -30,8 +30,9 @@ class Post {
     userId = json['userId'] ?? "";
     userImgUrl = json['userImgUrl'] ?? "";
     userName = json['userName'] ?? "";
-    docId = json['docId'] ?? "";
+    postId = json['docId'] ?? "";
     postDate = json['postDate'] ?? "";
+
     // createdAt = json['createdAt'] ?? "";
     isMyPost = userId == FirebaseAuth.instance.currentUser!.uid;
     // isMyPost = json['isMyPost'] ?? "";
@@ -45,7 +46,7 @@ class Post {
     data['userImgUrl'] = userImgUrl ??
         "https://th.bing.com/th/id/OIP.w8-nMMOuUD3gSHx8yyDVJQHaFj?pid=ImgDet&rs=1";
     data['userName'] = userName;
-    data['docId'] = docId;
+    data['docId'] = postId;
     data['postDate'] = postDate;
     // data['createdAt'] = createdAt;
     // data['isMyPost'] = isMyPost;

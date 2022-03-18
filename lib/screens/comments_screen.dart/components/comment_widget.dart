@@ -3,10 +3,10 @@ import 'package:farmer_club/utils/shared_widgets/image_avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/models/comment_model.dart';
+import '../../../data/models/comment_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'comments_provider.dart';
+import '../comments_provider.dart';
 
 class CommentWidget extends StatelessWidget {
   final Comment comment;
@@ -32,22 +32,26 @@ class CommentWidget extends StatelessWidget {
               //  border: Border.all(width: 1, color:const Color(0xff484D54))
             ),
           ),
+          const SizedBox(width: 3),
           Text(
-            timeago.format(comment.commentDate!, locale: 'ar'),
+            timeago.format(
+              comment.commentDate!,
+              locale: 'ar',
+              allowFromNow: true,
+            ),
             style: kTextStyleRegGery13,
           )
         ],
       ),
-      subtitle: Text(comment.commentText!),
+      subtitle: Text(comment.commentText!,
+          style: kTextStyleReg13.copyWith(color: Colors.black)),
       trailing: comment.isMyComment
           ? Consumer(builder: (context, ref, _) {
               return InkWell(
                   onTap: () async {
-                    print("delete start");
                     await ref
                         .read(addingCommentProvider(comment.postId!))
                         .deleteComment(context, comment);
-                    print("delete done");
                   },
                   child: const Icon(Icons.delete));
             })

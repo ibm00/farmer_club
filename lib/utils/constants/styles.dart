@@ -35,7 +35,15 @@ const kTextStyleReg24 = TextStyle(fontSize: 24);
 const kTextStyleBold26 = TextStyle(fontSize: 26, fontWeight: FontWeight.bold);
 //Post Text Style
 const kTextStylePostName16 = TextStyle(
-    fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xff241332));
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+  color: Color(0xff241332),
+);
+const kTextStyleProfileName25 = TextStyle(
+  fontSize: 28,
+  fontWeight: FontWeight.bold,
+  color: Color(0xff386641),
+);
 const kTextStylePost13 = TextStyle(fontSize: 13, color: kGeryPurpleColor);
 const kTextStylePostDate12 = TextStyle(fontSize: 12, color: kGeryPurpleColor);
 const kTextStyleComNum12 = TextStyle(

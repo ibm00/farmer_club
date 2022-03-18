@@ -1,7 +1,6 @@
 import 'package:farmer_club/data/firebase_services/fire_comments.dart';
 import 'package:farmer_club/data/models/comment_model.dart';
 import 'package:farmer_club/data/providers/user_data_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,7 +8,6 @@ import '../../utils/shared_widgets/snack_bar.dart';
 
 final getCommentsProvider = StreamProvider.family<List<Comment>, String>(
   (ref, postId) {
-    print("جوا البروفايدر postId: $postId");
     var x = FireComments.getComments(postId).map(
       (commentsCollectionSnapshot) => commentsCollectionSnapshot.docs
           .map(
@@ -19,8 +17,6 @@ final getCommentsProvider = StreamProvider.family<List<Comment>, String>(
           )
           .toList(),
     );
-    print("request donnnnnnnneeeeeeeeeeeee");
-    print(x.elementAt(0));
     return x;
   },
 );
@@ -50,18 +46,9 @@ class AddingCommentProvider extends ChangeNotifier {
       userImage: _reader(userDataProvider).imageUrl,
       userName: _reader(userDataProvider).name,
     );
-    // print("data befooooooooore post");
-    // print(_reader(userDataProvider).userId);
-    // print(_reader(userDataProvider).name);
-    _isLoading(true);
-    print("loading = trueeee");
     final isDone = await FireComments.addNewComment(comment);
-    _isLoading(false);
     commentController.clear();
-    print("loading = false");
-    if (isDone) {
-      showMySnakebar(context, "تم نشر البوست بنجاح");
-    }
+    if (isDone) {}
   }
 
   Future<void> deleteComment(BuildContext context, Comment comment) async {
@@ -73,7 +60,6 @@ class AddingCommentProvider extends ChangeNotifier {
   bool isLoading = false;
   void _isLoading(bool loadingState) {
     isLoading = loadingState;
-    // print("truuueee $isLoading");
     notifyListeners();
   }
 }

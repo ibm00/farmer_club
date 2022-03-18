@@ -43,6 +43,9 @@ class LoginScreenProvider extends ChangeNotifier {
           reader(userDataProvider).email = emailController.text.trim();
           reader(userDataProvider).name = userData['name'];
           reader(userDataProvider).imageUrl = userData['imageUrl'];
+          reader(userDataProvider).followersNum = userData['followersNum'];
+          reader(userDataProvider).followingsNum = userData['followingsNum'];
+          reader(userDataProvider).postsNum = userData['postsNum'];
           reader(userDataProvider).userId = userId;
         }
       }

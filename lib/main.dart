@@ -7,11 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 import 'screens/root_screen/root_screen.dart';
 import 'utils/constants/styles.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  timeago.setLocaleMessages('ar', timeago.ArMessages());
 
   runApp(
     EasyLocalization(

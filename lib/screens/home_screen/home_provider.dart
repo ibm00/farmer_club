@@ -5,22 +5,8 @@ import 'package:farmer_club/data/providers/user_data_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '../../utils/shared_widgets/snack_bar.dart';
-
-final homePostsProvider = StreamProvider<List<Post>>(
-  (ref) {
-    return FireHome.getHomePosts().map(
-      (postsCollectionSnapshot) => postsCollectionSnapshot.docs
-          .map(
-            (postsDocSnapshot) => Post.fromJson(postsDocSnapshot.data()),
-          )
-          .toList(),
-    );
-  },
-);
 
 final addingPostProvider = ChangeNotifierProvider<AddingPostProvider>(
   (ref) => AddingPostProvider(ref.read),
@@ -51,24 +37,25 @@ class AddingPostProvider extends ChangeNotifier {
       userName: _reader(userDataProvider).name ?? "",
       postDate: DateFormat.yMd('ar').format(DateTime.now()),
     );
-    // print("data befooooooooore post");
-    // print(_reader(userDataProvider).userId);
-    // print(_reader(userDataProvider).name);
     _isLoading(true);
-    print("loading = trueeee");
-    final isDone = await FireHome.addNewPost(post);
+    final postsNum = await FireHome.addNewPost(post);
     _isLoading(false);
     postController.clear();
-    print("loading = false");
-    if (isDone) {
+    if (postsNum != null) {
       showMySnakebar(context, "تم نشر البوست بنجاح");
+      _reader(userDataProvider).updatePostsNum(postsNum);
     }
   }
 
   Future<void> deletePost(BuildContext context, String postId) async {
     _isLoading(true);
-    await FireHome.deletePost(postId);
+    final postsNum =
+        await FireHome.deletePost(postId, _reader(userDataProvider).userId!);
     _isLoading(false);
+    if (postsNum != null) {
+      showMySnakebar(context, "تم حذف البوست بنجاح");
+      _reader(userDataProvider).updatePostsNum(postsNum);
+    }
   }
 
   // Future<void> onPickImagePressed(BuildContext context) async {

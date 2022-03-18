@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../screens/comments_screen.dart/comments_screen.dart';
 import '../../screens/home_screen/home_screen.dart';
 import '../../screens/login_screen/login_screen.dart';
+import '../../screens/profile_screen/profile_screen.dart';
 import '../../screens/register_screen/register_screen.dart';
 import '../../screens/root_screen/root_screen.dart';
 import '../../screens/splash_screen/splash_screen.dart';
@@ -34,6 +35,14 @@ class RoutesHelper {
         final postId = routeArgs as String;
         return MaterialPageRoute(
           builder: (context) => CommentsScreen(postId: postId),
+        );
+      case ProfileScreen.routeName:
+        final profileData = routeArgs as Map;
+        return MaterialPageRoute(
+          builder: (context) => ProfileScreen(
+            isMyProfile: profileData["isMyProfile"],
+            userId: profileData["userId"] as String,
+          ),
         );
 
       default:

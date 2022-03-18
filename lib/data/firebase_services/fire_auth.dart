@@ -72,6 +72,9 @@ class FireAuth {
       "email": user.email,
       "name": user.name,
       "imageUrl": user.imageUrl,
+      "followingsNum": user.followingsNum,
+      "followersNum": user.followersNum,
+      "postsNum": user.postsNum,
     });
   }
 

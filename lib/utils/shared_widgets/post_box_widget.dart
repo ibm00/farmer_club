@@ -1,10 +1,11 @@
-import 'dart:ffi';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:farmer_club/screens/comments_screen.dart/comments_screen.dart';
+import 'package:farmer_club/screens/profile_screen/profile_screen.dart';
 import 'package:farmer_club/utils/constants/styles.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models/post_model.dart';
+import '../../data/providers/user_data_provider.dart';
 import 'image_avatar_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -29,10 +30,24 @@ class PostBoxWidget extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ImageAvatarWidget(
-                  imageUrl: _post.userImgUrl ?? "",
-                  // borderThikness: 2,
-                ),
+                Consumer(builder: (context, ref, _) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        ProfileScreen.routeName,
+                        arguments: {
+                          "isMyProfile": ref.watch(userDataProvider).userId ==
+                              _post.userId,
+                          "userId": _post.userId,
+                        },
+                      );
+                    },
+                    child: ImageAvatarWidget(
+                      imageUrl: _post.userImgUrl ?? "",
+                      // borderThikness: 2,
+                    ),
+                  );
+                }),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +102,7 @@ class PostBoxWidget extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pushNamed(
                         CommentsScreen.routeName,
-                        arguments: _post.docId,
+                        arguments: _post.postId,
                       );
                     },
                     child: Row(
@@ -148,7 +163,7 @@ class PostBoxWidget extends StatelessWidget {
           case 2:
             {
               //Delelte Function
-              deletePostFun!(context, _post.docId!);
+              deletePostFun!(context, _post.postId!);
             }
             break;
         }

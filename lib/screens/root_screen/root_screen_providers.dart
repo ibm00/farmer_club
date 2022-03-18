@@ -15,6 +15,9 @@ final intialScreenProvider = FutureProvider<bool>(
         ref.read(userDataProvider).name = userData['name'];
         ref.read(userDataProvider).imageUrl = userData['imageUrl'];
         ref.read(userDataProvider).email = userData['email'];
+        ref.read(userDataProvider).followersNum = userData['followersNum'];
+        ref.read(userDataProvider).followingsNum = userData['followingsNum'];
+        ref.read(userDataProvider).postsNum = userData['postsNum'];
         ref.read(userDataProvider).userId = userId;
       }
 

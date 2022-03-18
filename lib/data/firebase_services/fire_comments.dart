@@ -19,9 +19,9 @@ class FireComments {
 
   static Future<bool> addNewComment(Comment comment) async {
     try {
-      final commentDoc = _firestoreInistance
-          .collection('posts/${comment.postId}/comments')
-          .doc();
+      final commentCollection =
+          _firestoreInistance.collection('posts/${comment.postId}/comments');
+      final commentDoc = commentCollection.doc();
       commentDoc.set(
         comment.toJson()
           ..addAll({
@@ -29,6 +29,9 @@ class FireComments {
             "createdAt": Timestamp.now(),
           }),
       );
+      final commentsDocs = await commentCollection.get();
+      final int commentsNum = commentsDocs.size;
+      _updateCommentsNum(comment.postId!, commentsNum);
       return true;
     } catch (e) {
       // ignore: avoid_print
@@ -39,15 +42,27 @@ class FireComments {
 
   static Future<bool> deleteComment(Comment comment) async {
     try {
-      print('posts/${comment.postId}/comments/${comment.commentId}');
-      await _firestoreInistance
-          .doc('posts/${comment.postId}/comments/${comment.commentId}')
-          .delete();
+      // print('posts/${comment.postId}/comments/${comment.commentId}');
+      final commentCollection =
+          _firestoreInistance.collection('posts/${comment.postId}/comments');
+      await commentCollection.doc(comment.commentId).delete();
+      final commentsDocs = await commentCollection.get();
+      final int commentsNum = commentsDocs.size;
+      _updateCommentsNum(comment.postId!, commentsNum);
       return true;
     } catch (e) {
       // ignore: avoid_print
       print(e);
       return false;
     }
+  }
+
+  static Future<void> _updateCommentsNum(String postId, int commentsNum) async {
+    final _firestoreInistance = FirebaseFirestore.instance;
+    await _firestoreInistance
+        .doc('posts/$postId')
+        .update({"commentsNum": commentsNum});
+    // commentsNum = comments.size;
+    // commentsNum =
   }
 }

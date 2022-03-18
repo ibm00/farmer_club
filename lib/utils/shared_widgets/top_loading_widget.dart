@@ -1,4 +1,3 @@
-import 'package:farmer_club/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 
 import 'circular_loading_widget.dart';

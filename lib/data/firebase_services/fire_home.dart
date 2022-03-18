@@ -12,33 +12,63 @@ class FireHome {
     return postsCollectionRef.snapshots();
   }
 
-  static Future<bool> addNewPost(Post post) async {
+  static Future<int?> addNewPost(Post post) async {
     try {
-      final postDoc = firestoreInistance.collection('posts').doc();
-      postDoc.set(
+      final postsCollection = firestoreInistance.collection('posts');
+      final postDoc = postsCollection.doc();
+      await postDoc.set(
         post.toJson()
           ..addAll({
             "docId": postDoc.id,
             "createdAt": Timestamp.now(),
           }),
       );
-      return true;
+      final postsDocs = await postsCollection.get();
+      final allPosts = postsDocs.docs;
+      int userPostsnum = 0;
+      for (var postDoc in allPosts) {
+        if (postDoc.data()['userId'] == post.userId) {
+          userPostsnum++;
+        }
+      }
+      _updatePostsNum(post.userId, userPostsnum);
+      return userPostsnum;
     } catch (e) {
       // ignore: avoid_print
       print(e);
-      return false;
+      return null;
     }
   }
 
-  static Future<bool> deletePost(String postID) async {
+  static Future<int?> deletePost(String postID, String userId) async {
     try {
-      await firestoreInistance.doc('posts/$postID').delete();
-      return true;
+      final postsCollection = firestoreInistance.collection('posts');
+      await postsCollection.doc(postID).delete();
+      final postsDocs = await postsCollection.get();
+      final allPosts = postsDocs.docs;
+      int userPostsnum = 0;
+      for (var postDoc in allPosts) {
+        if (postDoc.data()['userId'] == userId) {
+          userPostsnum++;
+        }
+      }
+      _updatePostsNum(userId, userPostsnum);
+      return userPostsnum;
     } catch (e) {
       // ignore: avoid_print
       print(e);
-      return false;
+      return null;
     }
+  }
+
+  static Future<void> _updatePostsNum(String userId, int postsNum) async {
+    final _firestoreInistance = FirebaseFirestore.instance;
+    await _firestoreInistance
+        .doc('users/$userId')
+        .update({"postsNum": postsNum});
+
+    // commentsNum = comments.size;
+    // commentsNum =
   }
 // final i = FirebaseFirestore.instance.collection("posts").doc();
 //   i.set({"data": i.id});
