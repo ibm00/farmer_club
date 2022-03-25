@@ -1,5 +1,6 @@
 import 'package:farmer_club/screens/profile_screen/profile_provider.dart';
 import 'package:farmer_club/utils/shared_widgets/button_widget.dart';
+import 'package:farmer_club/utils/shared_widgets/follow_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,10 +40,10 @@ class ProfileBody extends StatelessWidget {
         const SizedBox(height: 20),
         isMyProfile
             ? const AddPostCard()
-            : ButtonWidget(
-                title: "متابعة",
-                onButtonPressed: () {},
-                icon: const Icon(Icons.add),
+            : FollowButton(
+                isInsideProfile: true,
+                otherUserID: userProv.userId!,
+                isFollow: userProv.isCurrentUserFollowThisUser,
               ),
         const SizedBox(height: 20),
         Consumer(

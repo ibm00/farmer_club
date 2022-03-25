@@ -1,3 +1,4 @@
+import 'package:farmer_club/screens/search_screen.dart/search_screen.dart';
 import 'package:flutter/material.dart';
 import '../../screens/comments_screen.dart/comments_screen.dart';
 import '../../screens/home_screen/home_screen.dart';
@@ -43,6 +44,10 @@ class RoutesHelper {
             isMyProfile: profileData["isMyProfile"],
             userId: profileData["userId"] as String,
           ),
+        );
+      case SearchScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const SearchScreen(),
         );
 
       default:

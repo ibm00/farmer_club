@@ -1,3 +1,4 @@
+import 'package:farmer_club/data/providers/user_data_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/firebase_services/fire_home.dart';
@@ -5,8 +6,12 @@ import '../../data/firebase_services/fire_profile.dart';
 import '../../data/models/post_model.dart';
 import '../../data/models/user_model.dart';
 
-final getOtherUserDataProvider = FutureProvider.family<UserModel?, String>(
-  (ref, userId) => FireProfile.getOtherUserData(userId),
+final getOtherUserDataProvider =
+    FutureProvider.autoDispose.family<UserModel?, String>(
+  (ref, userId) => FireProfile.getOtherUserData(
+    userId,
+    ref.read(userDataProvider).userId!,
+  ),
 );
 
 final profilePostsProvider =

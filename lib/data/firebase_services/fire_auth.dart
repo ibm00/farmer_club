@@ -42,8 +42,10 @@ class FireAuth {
     final FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.signOut();
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(LoginScreen.routeName, (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        LoginScreen.routeName,
+        (route) => false,
+      );
       return true;
     } catch (e) {
       return false;

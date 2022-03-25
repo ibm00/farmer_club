@@ -1,5 +1,6 @@
 import 'package:farmer_club/data/providers/user_data_provider.dart';
 import 'package:farmer_club/screens/profile_screen/profile_screen.dart';
+import 'package:farmer_club/screens/search_screen.dart/search_screen.dart';
 import 'package:farmer_club/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +32,13 @@ class AppDrawer extends StatelessWidget {
                 },
               );
             }),
+            ListTile(
+              title: const Text("بحث", style: kTextStyleReg18),
+              leading: const Icon(Icons.search),
+              onTap: () async {
+                Navigator.of(context).pushNamed(SearchScreen.routeName);
+              },
+            ),
             Consumer(builder: (context, ref, _) {
               return ListTile(
                 title: const Text("تسجيل الخروج", style: kTextStyleReg18),

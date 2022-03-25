@@ -8,6 +8,7 @@ class UserModel extends ChangeNotifier {
   int followingsNum;
   int followersNum;
   int postsNum;
+  bool isCurrentUserFollowThisUser = false;
 
   UserModel({
     this.name,
@@ -24,17 +25,6 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'name': name,
-  //     'userId': userId,
-  //     'email': email,
-  //     'imageUrl': imageUrl,
-  //     'followingsNum': followingsNum,
-  //     'followersNum': followersNum,
-  //   };
-  // }
-
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       name: map['name'],
@@ -45,5 +35,12 @@ class UserModel extends ChangeNotifier {
       followersNum: map['followersNum']?.toInt() ?? 0,
       postsNum: map['postsNum']?.toInt() ?? 0,
     );
+  }
+
+  void setFollowingState(List<String> currentUserFollowing, [String? userId]) {
+    // print(currentUserFollowing);
+    if (currentUserFollowing.contains(userId ?? this.userId)) {
+      isCurrentUserFollowThisUser = true;
+    }
   }
 }
