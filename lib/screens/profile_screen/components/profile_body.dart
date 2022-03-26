@@ -1,9 +1,8 @@
+import 'package:farmer_club/data/providers/user_data_provider.dart';
 import 'package:farmer_club/screens/profile_screen/profile_provider.dart';
-import 'package:farmer_club/utils/shared_widgets/button_widget.dart';
 import 'package:farmer_club/utils/shared_widgets/follow_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../data/models/user_model.dart';
 import '../../../utils/constants/styles.dart';
 import '../../../utils/shared_widgets/add_post_card.dart';
@@ -32,11 +31,15 @@ class ProfileBody extends StatelessWidget {
           style: kTextStyleProfileName25,
         ),
         const SizedBox(height: 30),
-        UserNumber(
-          followersNum: userProv.followersNum,
-          followingsNum: userProv.followingsNum,
-          postsNum: userProv.postsNum,
-        ),
+        Consumer(builder: (context, ref, _) {
+          final userProvider =
+              isMyProfile ? ref.watch(userDataProvider) : userProv;
+          return UserNumber(
+            followersNum: userProvider.followersNum,
+            followingsNum: userProvider.followingsNum,
+            postsNum: userProvider.postsNum,
+          );
+        }),
         const SizedBox(height: 20),
         isMyProfile
             ? const AddPostCard()

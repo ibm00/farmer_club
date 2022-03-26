@@ -39,7 +39,18 @@ class FireSearch {
     }
   }
 
-  static Future<bool> followPressed({
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getFollowingUsers(
+    String currentUserId,
+  ) {
+    //get current user following list
+    return firestoreInistance
+        .collection(
+          "users/$currentUserId/following",
+        )
+        .snapshots();
+  }
+
+  static Future<int?> followPressed({
     required String currentUserId,
     required String otherUserID,
   }) async {
@@ -69,13 +80,13 @@ class FireSearch {
       //update other user followers num
       final otherUserDocumentRef = othertUserFollowersCollection.parent;
       otherUserDocumentRef!.update({"followersNum": otherUserFollowersNum});
-      return true;
+      return currentUserFollowingNum;
     } catch (e) {
-      return false;
+      return null;
     }
   }
 
-  static Future<bool> unFollowPressed({
+  static Future<int?> unFollowPressed({
     required String currentUserId,
     required String otherUserID,
   }) async {
@@ -101,9 +112,9 @@ class FireSearch {
       //update other user followers num
       final otherUserDocumentRef = othertUserFollowersCollection.parent;
       otherUserDocumentRef!.update({"followersNum": otherUserFollowersNum});
-      return true;
+      return currentUserFollowingNum;
     } catch (e) {
-      return false;
+      return null;
     }
   }
 }

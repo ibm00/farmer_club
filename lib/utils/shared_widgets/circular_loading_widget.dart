@@ -8,8 +8,8 @@ class CircularLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: SizedBox(
-        width: 50,
-        height: 50,
+        width: 35,
+        height: 35,
         child: CircularProgressIndicator(
           color: kPrimaryColor,
         ),

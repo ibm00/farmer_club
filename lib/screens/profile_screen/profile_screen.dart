@@ -40,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 198),
                 child: Consumer(builder: (context, ref, _) {
                   if (isMyProfile) {
-                    final userData = ref.watch(userDataProvider);
+                    final userData = ref.read(userDataProvider);
                     return EntireContent(
                       userProv: userData,
                       isMyProfile: isMyProfile,

@@ -24,20 +24,29 @@ class SearchProvider extends ChangeNotifier {
 
   Future<bool> onFollowPressed(String otherUserID) async {
     final currentUserId = reader(userDataProvider).userId;
-    final bool isDone = await FireSearch.followPressed(
+    final int? currentUserFollowingNum = await FireSearch.followPressed(
       currentUserId: currentUserId!,
       otherUserID: otherUserID,
     );
+    if (currentUserFollowingNum == null) return false;
 
-    return isDone;
+    _updateFollowingNumOnUI(currentUserFollowingNum);
+
+    return true;
   }
 
   Future<bool> onUnFollowPressed(String otherUserID) async {
     final currentUserId = reader(userDataProvider).userId;
-    final bool isDone = await FireSearch.unFollowPressed(
+    final int? currentUserFollowingNum = await FireSearch.unFollowPressed(
       currentUserId: currentUserId!,
       otherUserID: otherUserID,
     );
-    return isDone;
+    if (currentUserFollowingNum == null) return false;
+    _updateFollowingNumOnUI(currentUserFollowingNum);
+    return true;
+  }
+
+  void _updateFollowingNumOnUI(int currentUserFollowingNum) {
+    reader(userDataProvider).updateFollowingNum(currentUserFollowingNum);
   }
 }

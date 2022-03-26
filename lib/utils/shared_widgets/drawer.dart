@@ -22,6 +22,7 @@ class AppDrawer extends StatelessWidget {
                 title: const Text("حسابي", style: kTextStyleReg18),
                 leading: const Icon(Icons.person_outline_outlined),
                 onTap: () {
+                  Navigator.of(context).pop();
                   Navigator.of(context).pushNamed(
                     ProfileScreen.routeName,
                     arguments: {
@@ -36,6 +37,7 @@ class AppDrawer extends StatelessWidget {
               title: const Text("بحث", style: kTextStyleReg18),
               leading: const Icon(Icons.search),
               onTap: () async {
+                Navigator.of(context).pop();
                 Navigator.of(context).pushNamed(SearchScreen.routeName);
               },
             ),
@@ -45,6 +47,7 @@ class AppDrawer extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 onTap: () async {
                   ref.read(userDataProvider).postsNum = 0;
+                  ref.read(userDataProvider).followingsNum = 0;
                   await FireAuth.signout(context);
                 },
               );
