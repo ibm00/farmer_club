@@ -16,15 +16,19 @@ class SearchScreen extends StatelessWidget {
       appBar: const AppBarWidget(title: "بحث"),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             child: SizedBox(
               height: 47,
-              child: TextFieldWidget(
-                prefix: Icon(Icons.search, color: Colors.black),
-                isContentPadding: false,
-                hintText: "بحث...",
-              ),
+              child: Consumer(builder: (context, ref, _) {
+                return TextFieldWidget(
+                  onChange: (value) =>
+                      ref.read(searchProvider).onSearchFieldChanged(value!),
+                  prefix: const Icon(Icons.search, color: Colors.black),
+                  isContentPadding: false,
+                  hintText: "بحث...",
+                );
+              }),
             ),
           ),
           const Divider(),

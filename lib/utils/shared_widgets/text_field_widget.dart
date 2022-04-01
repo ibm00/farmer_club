@@ -6,6 +6,7 @@ class TextFieldWidget extends StatelessWidget {
     this.validator,
     this.hintText,
     this.onSaving,
+    this.onChange,
     this.controller,
     this.prefix,
     this.isContentPadding = true,
@@ -13,6 +14,7 @@ class TextFieldWidget extends StatelessWidget {
   });
   final Function(String?)? validator;
   final Function(String?)? onSaving;
+  final Function(String?)? onChange;
   final String? hintText;
   final TextEditingController? controller;
   final bool isLongField;
@@ -22,6 +24,7 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChange,
       controller: controller,
       validator: (v) => validator == null ? null : validator!(v),
       maxLines: isLongField ? 4 : 1,
