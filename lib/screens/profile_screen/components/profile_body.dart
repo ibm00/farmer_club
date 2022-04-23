@@ -11,7 +11,7 @@ import '../../../utils/shared_widgets/post_box_widget.dart';
 import '../../home_screen/home_provider.dart';
 import 'user_numbers.dart';
 
-class ProfileBody extends StatelessWidget {
+class ProfileBody extends ConsumerStatefulWidget {
   final UserModel userProv;
   final bool isMyProfile;
 
@@ -22,18 +22,35 @@ class ProfileBody extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProfileBodyState();
+}
+
+class _ProfileBodyState extends ConsumerState<ProfileBody> {
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      ref.read(addingPostProvider).clearPostDialog();
+    });
+    // Future.delayed(const Duration(seconds: 1)).then(
+    //   (value) => ref.read(addingPostProvider).clearPostDialog(),
+    // );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const SizedBox(height: 65),
         Text(
-          userProv.name!,
+          widget.userProv.name!,
           style: kTextStyleProfileName25,
         ),
         const SizedBox(height: 30),
         Consumer(builder: (context, ref, _) {
-          final userProvider =
-              isMyProfile ? ref.watch(userDataProvider) : userProv;
+          final userProvider = widget.isMyProfile
+              ? ref.watch(userDataProvider)
+              : widget.userProv;
           return UserNumber(
             followersNum: userProvider.followersNum,
             followingsNum: userProvider.followingsNum,
@@ -41,18 +58,18 @@ class ProfileBody extends StatelessWidget {
           );
         }),
         const SizedBox(height: 20),
-        isMyProfile
+        widget.isMyProfile
             ? const AddPostCard()
             : FollowButton(
                 isInsideProfile: true,
-                otherUserID: userProv.userId!,
-                isFollow: userProv.isCurrentUserFollowThisUser,
+                otherUserID: widget.userProv.userId!,
+                isFollow: widget.userProv.isCurrentUserFollowThisUser,
               ),
         const SizedBox(height: 20),
         Consumer(
           builder: (context, ref, _) {
-            final postsProv = ref.watch(profilePostsProvider(userProv.userId));
-
+            final postsProv =
+                ref.watch(profilePostsProvider(widget.userProv.userId));
             return postsProv.when(
               data: (posts) {
                 return ListView.builder(

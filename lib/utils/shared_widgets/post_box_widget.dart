@@ -83,7 +83,7 @@ class PostBoxWidget extends StatelessWidget {
                 ],
               ),
             const SizedBox(height: 10),
-            if (_post.userImgUrl != "")
+            if (_post.postImage != null && _post.postImage != "")
               ClipRRect(
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(35),
@@ -91,7 +91,7 @@ class PostBoxWidget extends StatelessWidget {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(35),
                 ),
-                child: CachedNetworkImage(imageUrl: _post.userImgUrl ?? ""),
+                child: CachedNetworkImage(imageUrl: _post.postImage ?? ""),
               ),
             const SizedBox(height: 15),
             InkWell(

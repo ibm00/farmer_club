@@ -1,3 +1,4 @@
+import 'package:farmer_club/data/providers/user_data_provider.dart';
 import 'package:farmer_club/screens/home_screen/home_provider.dart';
 import 'package:farmer_club/utils/shared_widgets/button_widget.dart';
 import 'package:farmer_club/utils/shared_widgets/image_avatar_widget.dart';
@@ -30,7 +31,7 @@ class AddPostCard extends ConsumerWidget {
               fit: StackFit.loose,
               children: [
                 TextFormField(
-                  controller: addPostProv.postController,
+                  controller: addPostProv.homePostController,
                   maxLines: 4,
                   decoration: InputDecoration(
                     filled: true,
@@ -47,10 +48,21 @@ class AddPostCard extends ConsumerWidget {
                 ),
                 Positioned(
                   top: 1,
-                  child: ImageAvatarWidget(imageUrl: addPostProv.userImgUrl),
+                  child: ImageAvatarWidget(
+                    imageUrl: ref.read(userDataProvider).imageUrl,
+                  ),
                 ),
               ],
             ),
+            Consumer(builder: (context, ref, _) {
+              final ImageProvider? userImage = ref.watch(
+                addingPostProvider.select((value) => value.userImage),
+              );
+              return userImage != null
+                  ? Image(image: userImage)
+                  : const SizedBox();
+            }),
+            const SizedBox(height: 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,6 +73,7 @@ class AddPostCard extends ConsumerWidget {
                   color: const Color(0xffF8F9FB),
                   title: 'صورة',
                   onButtonPressed: () {
+                    addPostProv.pickImage(context);
                     // print(ref.read(userDataProvider).email);
                     // print(ref.read(userDataProvider).name);
                     // print(ref.read(userDataProvider).userId);

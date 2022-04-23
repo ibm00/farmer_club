@@ -5,6 +5,7 @@ class Post {
   late String postText;
   late String userId;
   String? userImgUrl;
+  String? postImage;
   late String userName;
   String? postId;
   late String postDate;
@@ -16,6 +17,7 @@ class Post {
     required this.postText,
     required this.userId,
     required this.userImgUrl,
+    required this.postImage,
     required this.userName,
     this.postId,
     required this.postDate,
@@ -29,6 +31,7 @@ class Post {
     postText = json['postText'] ?? "";
     userId = json['userId'] ?? "";
     userImgUrl = json['userImgUrl'] ?? "";
+    postImage = json['postImage'] ?? "";
     userName = json['userName'] ?? "";
     postId = json['docId'] ?? "";
     postDate = json['postDate'] ?? "";
@@ -43,8 +46,8 @@ class Post {
     data['commentsNum'] = commentsNum;
     data['postText'] = postText;
     data['userId'] = userId;
-    data['userImgUrl'] = userImgUrl ??
-        "https://th.bing.com/th/id/OIP.w8-nMMOuUD3gSHx8yyDVJQHaFj?pid=ImgDet&rs=1";
+    data['userImgUrl'] = userImgUrl ?? "";
+    data['postImage'] = postImage ?? "";
     data['userName'] = userName;
     data['docId'] = postId;
     data['postDate'] = postDate;

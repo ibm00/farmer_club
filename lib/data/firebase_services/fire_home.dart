@@ -1,5 +1,10 @@
+// ignore_for_file: avoid_print
+
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_club/data/models/post_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FireHome {
   static final firestoreInistance = FirebaseFirestore.instance;
@@ -55,7 +60,6 @@ class FireHome {
       _updatePostsNum(userId, userPostsnum);
       return userPostsnum;
     } catch (e) {
-      // ignore: avoid_print
       print(e);
       return null;
     }
@@ -66,11 +70,22 @@ class FireHome {
     await _firestoreInistance
         .doc('users/$userId')
         .update({"postsNum": postsNum});
-
-    // commentsNum = comments.size;
-    // commentsNum =
   }
-// final i = FirebaseFirestore.instance.collection("posts").doc();
-//   i.set({"data": i.id});
-  // Timestamp.now()
+
+  static Future<String?> uploadPostImage({
+    required File userImage,
+    required userId,
+  }) async {
+    try {
+      final imageReference = FirebaseStorage.instance.ref().child(
+            'posts_images/${userImage.path.split('/').last}',
+          );
+      await imageReference.putFile(userImage);
+      final imgUrl = await imageReference.getDownloadURL();
+      return imgUrl;
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
 }

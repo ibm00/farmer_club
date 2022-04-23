@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../data/models/user_model.dart';
+import '../home_screen/home_provider.dart';
 import 'components/profile_body.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -23,50 +24,59 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Container(
-                height: 220,
-                color: kPrimaryColor,
-                child: SvgPicture.asset(
-                  "assets/images/splash_flower.svg",
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 198),
-                child: Consumer(builder: (context, ref, _) {
-                  if (isMyProfile) {
-                    final userData = ref.read(userDataProvider);
-                    return EntireContent(
-                      userProv: userData,
-                      isMyProfile: isMyProfile,
-                    );
-                  } else {
-                    final otherUserProv =
-                        ref.watch(getOtherUserDataProvider(userId));
-                    return otherUserProv.when(
-                      data: (userData) {
-                        userData!.userId = userId;
+    return Consumer(builder: (context, ref, _) {
+      return WillPopScope(
+        onWillPop: () async {
+          Navigator.of(context).pop();
+          ref.read(addingPostProvider).clearPostDialog();
+          return Future.value(false);
+        },
+        child: SafeArea(
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: Stack(
+                children: [
+                  Container(
+                    height: 220,
+                    color: kPrimaryColor,
+                    child: SvgPicture.asset(
+                      "assets/images/splash_flower.svg",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 198),
+                    child: Consumer(builder: (context, ref, _) {
+                      if (isMyProfile) {
+                        final userData = ref.read(userDataProvider);
                         return EntireContent(
                           userProv: userData,
                           isMyProfile: isMyProfile,
                         );
-                      },
-                      loading: () => const CircularLoadingWidget(),
-                      error: (e, s) => Text(e.toString()),
-                    );
-                  }
-                }),
-              )
-            ],
+                      } else {
+                        final otherUserProv =
+                            ref.watch(getOtherUserDataProvider(userId));
+                        return otherUserProv.when(
+                          data: (userData) {
+                            userData!.userId = userId;
+                            return EntireContent(
+                              userProv: userData,
+                              isMyProfile: isMyProfile,
+                            );
+                          },
+                          loading: () => const CircularLoadingWidget(),
+                          error: (e, s) => Text(e.toString()),
+                        );
+                      }
+                    }),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 

@@ -1,50 +1,63 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:farmer_club/data/firebase_services/fire_home.dart';
 import 'package:farmer_club/data/models/post_model.dart';
 import 'package:farmer_club/data/providers/user_data_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../utils/shared_widgets/snack_bar.dart';
+import 'select_photo_options_widget.dart';
 
 final addingPostProvider = ChangeNotifierProvider<AddingPostProvider>(
   (ref) => AddingPostProvider(ref.read),
 );
 
 class AddingPostProvider extends ChangeNotifier {
-  String userImgUrl = "";
-  TextEditingController postController = TextEditingController();
-  String getPostTxt() => postController.text.trim();
+  TextEditingController homePostController = TextEditingController();
+  TextEditingController profilePostController = TextEditingController();
+  String getPostTxt() => homePostController.text.trim();
   final formKey = GlobalKey<FormState>();
   String emptyPostError = "";
   final Reader _reader;
-  AddingPostProvider(this._reader) {
-    userImgUrl = _reader(userDataProvider).imageUrl;
-  }
-
+  AddingPostProvider(this._reader);
   Future<void> addNewPost(BuildContext context) async {
-    if (getPostTxt().isEmpty) {
+    if (getPostTxt().isEmpty && userImage == null) {
       showMySnakebar(context, "لا يمكن نشر بوست فارغ");
       return;
+    }
+    String? imageUrl;
+    _isLoading(true);
+    if (userImage != null) {
+      imageUrl = await _uploadImageToServer();
     }
 
     final post = Post(
       commentsNum: 0,
       postText: getPostTxt(),
       userId: _reader(userDataProvider).userId ?? "",
-      userImgUrl: userImgUrl,
+      postImage: imageUrl ?? "",
+      userImgUrl: _reader(userDataProvider).imageUrl,
       userName: _reader(userDataProvider).name ?? "",
       postDate: DateFormat.yMd('ar').format(DateTime.now()),
     );
-    _isLoading(true);
+
     final postsNum = await FireHome.addNewPost(post);
     _isLoading(false);
-    postController.clear();
+    clearPostDialog();
+    notifyListeners();
     if (postsNum != null) {
       showMySnakebar(context, "تم نشر البوست بنجاح");
       _reader(userDataProvider).updatePostsNum(postsNum);
     }
+  }
+
+  void clearPostDialog() {
+    _userImage = null;
+    homePostController.text = '';
+    notifyListeners();
   }
 
   Future<void> deletePost(BuildContext context, String postId) async {
@@ -56,6 +69,54 @@ class AddingPostProvider extends ChangeNotifier {
       showMySnakebar(context, "تم حذف البوست بنجاح");
       _reader(userDataProvider).updatePostsNum(postsNum);
     }
+  }
+
+  ImageProvider? _userImage;
+  ImageProvider? get userImage => _userImage;
+  File? _userImageFile;
+
+  Future<void> pickImage(BuildContext context) async {
+    try {
+      final sellectedImgPickerSource = await _showModelSheet(context);
+      final ImagePicker _picker = ImagePicker();
+
+      if (sellectedImgPickerSource != null) {
+        final pickedFile = await _picker.pickImage(
+          source: sellectedImgPickerSource,
+          imageQuality: 20,
+        );
+        _userImageFile = File(pickedFile!.path);
+        _userImage = FileImage(_userImageFile!);
+      }
+      notifyListeners();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  Future<ImageSource?> _showModelSheet(BuildContext context) async {
+    final imageType = await showModalBottomSheet<ImageSource>(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (context) {
+        return const SelectPhotoOptionsWidget();
+      },
+    );
+    return imageType;
+  }
+
+  Future<String?> _uploadImageToServer() async {
+    final imageUrl = await FireHome.uploadPostImage(
+      userImage: _userImageFile!,
+      userId: _reader(userDataProvider).userId,
+    );
+    return imageUrl;
   }
 
   // Future<void> onPickImagePressed(BuildContext context) async {
