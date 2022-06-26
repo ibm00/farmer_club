@@ -1,3 +1,4 @@
+import 'package:farmer_club/screens/error_screen/error_screen.dart';
 import 'package:farmer_club/screens/search_screen.dart/search_screen.dart';
 import 'package:flutter/material.dart';
 import '../../screens/comments_screen.dart/comments_screen.dart';
@@ -9,7 +10,7 @@ import '../../screens/root_screen/root_screen.dart';
 import '../../screens/splash_screen/splash_screen.dart';
 
 class RoutesHelper {
-  static Route generateRoute(RouteSettings settings) {
+  static Route? generateRoute(RouteSettings settings) {
     final routeArgs = settings.arguments;
     switch (settings.name) {
       case LoginScreen.routeName:
@@ -24,9 +25,9 @@ class RoutesHelper {
         return MaterialPageRoute(
           builder: (context) => SplashScreen(),
         );
-      case RooteScreen.routeName:
+      case RootScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => const RooteScreen(),
+          builder: (context) => const RootScreen(),
         );
       case RegisterScreen.routeName:
         return MaterialPageRoute(
@@ -51,9 +52,7 @@ class RoutesHelper {
         );
 
       default:
-        return MaterialPageRoute(
-          builder: (context) => SplashScreen(),
-        );
+        return null;
     }
   }
 }

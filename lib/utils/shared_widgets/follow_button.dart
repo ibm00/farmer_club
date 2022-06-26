@@ -9,10 +9,12 @@ class FollowButton extends StatefulWidget {
   final bool isInsideProfile;
   final String otherUserID;
   final bool isFollow;
+  final void Function(int)? doThisAftherPress;
   const FollowButton({
     required this.isInsideProfile,
     required this.otherUserID,
     required this.isFollow,
+    this.doThisAftherPress,
     Key? key,
   }) : super(key: key);
 
@@ -45,11 +47,12 @@ class _FollowButtonState extends State<FollowButton> {
             fontWeight: FontWeight.bold,
             fontSize: widget.isInsideProfile ? 16 : 12,
           ),
-          onButtonPressed: () {
-            onButtonPressed(ref.read, widget.otherUserID);
+          onButtonPressed: () async {
+            final int? otherUserFollowersNum =
+                await onButtonPressed(ref.read, widget.otherUserID);
             if (widget.isInsideProfile) {
-              print("insideporfile");
               ref.refresh(allUsersProvider);
+              widget.doThisAftherPress!(otherUserFollowersNum!);
             }
           },
           color: isFollowState ? Colors.grey[400]! : kPrimaryTextColor,
@@ -59,30 +62,34 @@ class _FollowButtonState extends State<FollowButton> {
     );
   }
 
-  Future<void> onButtonPressed(Reader reader, String otherUserID) async {
+  Future<int?> onButtonPressed(Reader reader, String otherUserID) async {
     setState(() {
       isFollowState = !isFollowState;
     });
     if (isFollowState) {
-      print("follow pressed");
-      final bool isDone = await reader(searchProvider).onFollowPressed(
+      final int? otherUserFollowersNum = await reader(
+        searchProvider,
+      ).onFollowPressed(
         otherUserID,
       );
-      if (!isDone) {
+
+      if (otherUserFollowersNum == null) {
         setState(() {
           isFollowState = !isFollowState;
         });
       }
+      return otherUserFollowersNum;
     } else {
-      print("unfollow pressed");
-      final bool isDone = await reader(searchProvider).onUnFollowPressed(
+      final int? otherUserFollowersNum =
+          await reader(searchProvider).onUnFollowPressed(
         otherUserID,
       );
-      if (!isDone) {
+      if (otherUserFollowersNum == null) {
         setState(() {
           isFollowState = !isFollowState;
         });
       }
+      return otherUserFollowersNum;
     }
   }
 }

@@ -20,7 +20,6 @@ final intialScreenProvider = FutureProvider<bool>(
         ref.read(userDataProvider).postsNum = userData['postsNum'];
         ref.read(userDataProvider).userId = userId;
       }
-
       return true;
     } catch (e) {
       return false;

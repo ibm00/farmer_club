@@ -64,7 +64,10 @@ class ProfileScreen extends StatelessWidget {
                               isMyProfile: isMyProfile,
                             );
                           },
-                          loading: () => const CircularLoadingWidget(),
+                          loading: () => const Padding(
+                            padding: EdgeInsets.only(top: 50),
+                            child: CircularLoadingWidget(),
+                          ),
                           error: (e, s) => Text(e.toString()),
                         );
                       }

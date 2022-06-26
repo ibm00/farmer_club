@@ -29,7 +29,7 @@ class AddingPostProvider extends ChangeNotifier {
       return;
     }
     String? imageUrl;
-    _isLoading(true);
+    _isNewPostLoading(true);
     if (userImage != null) {
       imageUrl = await _uploadImageToServer();
     }
@@ -45,7 +45,7 @@ class AddingPostProvider extends ChangeNotifier {
     );
 
     final postsNum = await FireHome.addNewPost(post);
-    _isLoading(false);
+    _isNewPostLoading(false);
     clearPostDialog();
     notifyListeners();
     if (postsNum != null) {
@@ -139,6 +139,13 @@ class AddingPostProvider extends ChangeNotifier {
   bool isLoading = false;
   void _isLoading(bool loadingState) {
     isLoading = loadingState;
+    // print("truuueee $isLoading");
+    notifyListeners();
+  }
+
+  bool isLoadingNewPost = false;
+  void _isNewPostLoading(bool loadingState) {
+    isLoadingNewPost = loadingState;
     // print("truuueee $isLoading");
     notifyListeners();
   }

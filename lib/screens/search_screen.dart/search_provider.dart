@@ -39,29 +39,35 @@ class SearchProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> onFollowPressed(String otherUserID) async {
+  Future<int?> onFollowPressed(String otherUserID) async {
     final currentUserId = reader(userDataProvider).userId;
-    final int? currentUserFollowingNum = await FireSearch.followPressed(
+    final Map? followingAndFollowers = await FireSearch.followPressed(
       currentUserId: currentUserId!,
       otherUserID: otherUserID,
     );
-    if (currentUserFollowingNum == null) return false;
-    _updateFollowingNumOnUI(currentUserFollowingNum);
-    return true;
+    if (followingAndFollowers == null) return null;
+    _updateFollowingNumOnUI(followingAndFollowers['currentUserFollowingNum']);
+    _updateFollowerNumOnUI(followingAndFollowers['otherUserFollowersNum']);
+    return followingAndFollowers['otherUserFollowersNum'];
   }
 
-  Future<bool> onUnFollowPressed(String otherUserID) async {
+  Future<int?> onUnFollowPressed(String otherUserID) async {
     final currentUserId = reader(userDataProvider).userId;
-    final int? currentUserFollowingNum = await FireSearch.unFollowPressed(
+    final Map? followingAndFollowers = await FireSearch.unFollowPressed(
       currentUserId: currentUserId!,
       otherUserID: otherUserID,
     );
-    if (currentUserFollowingNum == null) return false;
-    _updateFollowingNumOnUI(currentUserFollowingNum);
-    return true;
+    if (followingAndFollowers == null) return null;
+    _updateFollowingNumOnUI(followingAndFollowers['currentUserFollowingNum']);
+    _updateFollowerNumOnUI(followingAndFollowers['otherUserFollowersNum']);
+    return followingAndFollowers['otherUserFollowersNum'];
   }
 
   void _updateFollowingNumOnUI(int currentUserFollowingNum) {
     reader(userDataProvider).updateFollowingNum(currentUserFollowingNum);
+  }
+
+  void _updateFollowerNumOnUI(int otherUserFollowersNum) {
+    reader(userDataProvider).updateFollowerNum(otherUserFollowersNum);
   }
 }

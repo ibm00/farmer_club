@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/styles.dart';
+import 'circular_loading_widget.dart';
 
 class AddPostCard extends ConsumerWidget {
   // final String imgUrl;
@@ -86,19 +87,32 @@ class AddPostCard extends ConsumerWidget {
                     color: kGreenIconsColor,
                   ),
                 ),
-                ButtonWidget(
-                  elevation: 4,
-                  borderRadius: 10,
-                  color: kPrimaryTextColor,
-                  title: 'نشر',
-                  onButtonPressed: () async {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    await addPostProv.addNewPost(context);
+                Consumer(
+                  builder: (context, ref, _) {
+                    final bool isPostLoading = ref.watch(
+                      addingPostProvider
+                          .select((value) => value.isLoadingNewPost),
+                    );
+                    return isPostLoading
+                        ? Container(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: const CircularLoadingWidget(),
+                          )
+                        : ButtonWidget(
+                            elevation: 4,
+                            borderRadius: 10,
+                            color: kPrimaryTextColor,
+                            title: 'نشر',
+                            onButtonPressed: () async {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              await addPostProv.addNewPost(context);
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                          );
                   },
-                  icon: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
                 )
               ],
             ),

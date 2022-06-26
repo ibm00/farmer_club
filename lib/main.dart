@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           primaryColor: kPrimaryColor,
           fontFamily: 'Nunito',
         ),
-        initialRoute: RooteScreen.routeName,
+        initialRoute: RootScreen.routeName,
         onGenerateRoute: RoutesHelper.generateRoute,
       ),
     );

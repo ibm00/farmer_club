@@ -26,15 +26,23 @@ class ProfileBody extends ConsumerStatefulWidget {
 }
 
 class _ProfileBodyState extends ConsumerState<ProfileBody> {
+  int? followers;
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ref.read(addingPostProvider).clearPostDialog();
     });
+    followers = widget.userProv.followersNum;
     // Future.delayed(const Duration(seconds: 1)).then(
     //   (value) => ref.read(addingPostProvider).clearPostDialog(),
     // );
     super.initState();
+  }
+
+  void updateFolllowersNum(int followers) {
+    setState(() {
+      this.followers = followers;
+    });
   }
 
   @override
@@ -47,16 +55,19 @@ class _ProfileBodyState extends ConsumerState<ProfileBody> {
           style: kTextStyleProfileName25,
         ),
         const SizedBox(height: 30),
-        Consumer(builder: (context, ref, _) {
-          final userProvider = widget.isMyProfile
-              ? ref.watch(userDataProvider)
-              : widget.userProv;
-          return UserNumber(
-            followersNum: userProvider.followersNum,
-            followingsNum: userProvider.followingsNum,
-            postsNum: userProvider.postsNum,
-          );
-        }),
+        Consumer(
+          builder: (context, ref, _) {
+            final userProvider = widget.isMyProfile
+                ? ref.watch(userDataProvider)
+                : widget.userProv;
+            return UserNumber(
+              followersNum:
+                  widget.isMyProfile ? userProvider.followersNum : followers!,
+              followingsNum: userProvider.followingsNum,
+              postsNum: userProvider.postsNum,
+            );
+          },
+        ),
         const SizedBox(height: 20),
         widget.isMyProfile
             ? const AddPostCard()
@@ -64,6 +75,7 @@ class _ProfileBodyState extends ConsumerState<ProfileBody> {
                 isInsideProfile: true,
                 otherUserID: widget.userProv.userId!,
                 isFollow: widget.userProv.isCurrentUserFollowThisUser,
+                doThisAftherPress: updateFolllowersNum,
               ),
         const SizedBox(height: 20),
         Consumer(
@@ -72,15 +84,20 @@ class _ProfileBodyState extends ConsumerState<ProfileBody> {
                 ref.watch(profilePostsProvider(widget.userProv.userId));
             return postsProv.when(
               data: (posts) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: posts.length,
-                  itemBuilder: (context, index) => PostBoxWidget(
-                    posts[index],
-                    deletePostFun: ref.read(addingPostProvider).deletePost,
-                  ),
-                );
+                return posts.isEmpty
+                    ? const Text(
+                        '"هذا الصديق ليس لديه منشورات، تابع أصدقاء جدد"',
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: posts.length,
+                        itemBuilder: (context, index) => PostBoxWidget(
+                          posts[index],
+                          deletePostFun:
+                              ref.read(addingPostProvider).deletePost,
+                        ),
+                      );
               },
               error: (e, s) => Text("error Happend: ${e.toString()}"),
               loading: () => const CircularLoadingWidget(),

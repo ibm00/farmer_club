@@ -26,9 +26,15 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateFollowingNum(int followingNum) {
-    followingsNum = followingNum;
+  void updateFollowingNum(int followingsNum) {
+    this.followingsNum = followingsNum;
     notifyListeners();
+  }
+
+  void updateFollowerNum(int followersNum) {
+    this.followersNum = followersNum;
+    notifyListeners();
+    print("update follower num pressed ${this.followersNum}");
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {

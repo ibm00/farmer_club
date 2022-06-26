@@ -49,16 +49,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         final homePostsProv = ref.watch(postsProvider(null));
                         return homePostsProv.when(
                           data: (posts) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const ClampingScrollPhysics(),
-                              itemCount: posts.length,
-                              itemBuilder: (context, index) => PostBoxWidget(
-                                posts[index],
-                                deletePostFun:
-                                    ref.read(addingPostProvider).deletePost,
-                              ),
-                            );
+                            return posts.isEmpty
+                                ? const Text(
+                                    '"ليس لديك منشورات، تابع أصدقاء جدد"',
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    itemCount: posts.length,
+                                    itemBuilder: (context, index) =>
+                                        PostBoxWidget(
+                                      posts[index],
+                                      deletePostFun: ref
+                                          .read(addingPostProvider)
+                                          .deletePost,
+                                    ),
+                                  );
                           },
                           error: (e, s) =>
                               Text("error Happend: ${e.toString()}"),

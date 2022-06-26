@@ -19,7 +19,7 @@ final postsProvider = StreamProvider.family<List<Post>, String?>(
             return post.userId == userId;
           } else {
             final followingUserProv = ref.watch(followingUsersProvider);
-            final List<String> followingList = followingUserProv.value!;
+            final List<String> followingList = followingUserProv.value ?? [];
             followingList.add(ref.watch(userDataProvider).userId!);
             return followingList.contains(post.userId);
           }

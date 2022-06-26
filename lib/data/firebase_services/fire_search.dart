@@ -50,7 +50,7 @@ class FireSearch {
         .snapshots();
   }
 
-  static Future<int?> followPressed({
+  static Future<Map?> followPressed({
     required String currentUserId,
     required String otherUserID,
   }) async {
@@ -80,13 +80,16 @@ class FireSearch {
       //update other user followers num
       final otherUserDocumentRef = othertUserFollowersCollection.parent;
       otherUserDocumentRef!.update({"followersNum": otherUserFollowersNum});
-      return currentUserFollowingNum;
+      return {
+        "currentUserFollowingNum": currentUserFollowingNum,
+        "otherUserFollowersNum": otherUserFollowersNum
+      };
     } catch (e) {
       return null;
     }
   }
 
-  static Future<int?> unFollowPressed({
+  static Future<Map?> unFollowPressed({
     required String currentUserId,
     required String otherUserID,
   }) async {
@@ -112,7 +115,10 @@ class FireSearch {
       //update other user followers num
       final otherUserDocumentRef = othertUserFollowersCollection.parent;
       otherUserDocumentRef!.update({"followersNum": otherUserFollowersNum});
-      return currentUserFollowingNum;
+      return {
+        "currentUserFollowingNum": currentUserFollowingNum,
+        "otherUserFollowersNum": otherUserFollowersNum
+      };
     } catch (e) {
       return null;
     }
