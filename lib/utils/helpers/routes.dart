@@ -10,6 +10,7 @@ import '../../screens/root_screen/root_screen.dart';
 import '../../screens/splash_screen/splash_screen.dart';
 
 class RoutesHelper {
+  static final navigatorKey = GlobalKey<NavigatorState>();
   static Route? generateRoute(RouteSettings settings) {
     final routeArgs = settings.arguments;
     switch (settings.name) {

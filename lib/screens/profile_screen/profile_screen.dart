@@ -38,10 +38,11 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Container(
                     height: 220,
+                    width: double.infinity,
                     color: kPrimaryColor,
                     child: SvgPicture.asset(
                       "assets/images/splash_flower.svg",
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                   ),
                   Padding(

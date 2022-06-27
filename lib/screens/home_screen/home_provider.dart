@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../utils/shared_widgets/snack_bar.dart';
-import 'select_photo_options_widget.dart';
+import 'components/select_photo_options_widget.dart';
 
 final addingPostProvider = ChangeNotifierProvider<AddingPostProvider>(
   (ref) => AddingPostProvider(ref.read),
@@ -17,10 +17,7 @@ final addingPostProvider = ChangeNotifierProvider<AddingPostProvider>(
 
 class AddingPostProvider extends ChangeNotifier {
   TextEditingController homePostController = TextEditingController();
-  TextEditingController profilePostController = TextEditingController();
   String getPostTxt() => homePostController.text.trim();
-  final formKey = GlobalKey<FormState>();
-  String emptyPostError = "";
   final Reader _reader;
   AddingPostProvider(this._reader);
   Future<void> addNewPost(BuildContext context) async {
@@ -114,7 +111,6 @@ class AddingPostProvider extends ChangeNotifier {
   Future<String?> _uploadImageToServer() async {
     final imageUrl = await FireHome.uploadPostImage(
       userImage: _userImageFile!,
-      userId: _reader(userDataProvider).userId,
     );
     return imageUrl;
   }

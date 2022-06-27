@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/constants/styles.dart';
+import '../../../../utils/constants/styles.dart';
 
 class SelectPhotoWidget extends StatelessWidget {
   const SelectPhotoWidget({

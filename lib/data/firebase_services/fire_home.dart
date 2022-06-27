@@ -39,9 +39,22 @@ class FireHome {
       _updatePostsNum(post.userId, userPostsnum);
       return userPostsnum;
     } catch (e) {
-      // ignore: avoid_print
       print(e);
       return null;
+    }
+  }
+
+  static Future<bool> updatePost(Map postData) async {
+    try {
+      final postsCollection = firestoreInistance.collection('posts');
+      postsCollection.doc(postData["postId"]).update({
+        "postText": postData["postText"],
+        "postImage": postData["imageUrl"],
+      });
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
     }
   }
 
@@ -74,7 +87,6 @@ class FireHome {
 
   static Future<String?> uploadPostImage({
     required File userImage,
-    required userId,
   }) async {
     try {
       final imageReference = FirebaseStorage.instance.ref().child(
@@ -88,4 +100,21 @@ class FireHome {
     }
     return null;
   }
+
+  // static Future<String?> updatePostImage({
+  //   required File userImage,
+  //   required userId,
+  // }) async {
+  //   try {
+  //     final imageReference = FirebaseStorage.instance.ref().child(
+  //           'posts_images/${userImage.path.split('/').last}',
+  //         );
+  //     await imageReference.putFile(userImage);
+  //     final imgUrl = await imageReference.getDownloadURL();
+  //     return imgUrl;
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   return null;
+  // }
 }

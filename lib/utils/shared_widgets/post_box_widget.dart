@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:farmer_club/screens/comments_screen.dart/comments_screen.dart';
+import 'package:farmer_club/screens/home_screen/components/edit_post_screen.dart';
 import 'package:farmer_club/screens/profile_screen/profile_screen.dart';
 import 'package:farmer_club/utils/constants/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,9 +59,8 @@ class PostBoxWidget extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: InkWell(
+                if (_post.isMyPost)
+                  InkWell(
                     onTap: () {},
                     onTapDown: (details) => showPopupMenu(context, details),
                     child: const Icon(
@@ -68,7 +68,6 @@ class PostBoxWidget extends StatelessWidget {
                       color: Colors.grey,
                     ),
                   ),
-                ),
               ],
             ),
             if (_post.postText != "")
@@ -108,8 +107,10 @@ class PostBoxWidget extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(_post.commentsNum.toString(),
-                            style: kTextStyleComNum12),
+                        Text(
+                          _post.commentsNum.toString(),
+                          style: kTextStyleComNum12,
+                        ),
                         const SizedBox(width: 2),
                         const Icon(
                           Icons.mode_comment_outlined,
@@ -137,13 +138,13 @@ class PostBoxWidget extends StatelessWidget {
       position: RelativeRect.fromLTRB(
         details.globalPosition.dx,
         details.globalPosition.dy,
-        details.globalPosition.dx,
         details.globalPosition.dy,
+        details.globalPosition.dx,
       ),
       items: _post.isMyPost
           ? const [
-              PopupMenuItem<int>(child: Text('Edit'), value: 1),
-              PopupMenuItem<int>(child: Text('Delete'), value: 2),
+              PopupMenuItem<int>(child: Text('تعديل'), value: 1),
+              PopupMenuItem<int>(child: Text('مسح'), value: 2),
             ]
           : const [
               PopupMenuItem<int>(child: Text('Save Post'), value: 1),
@@ -157,6 +158,17 @@ class PostBoxWidget extends StatelessWidget {
           case 1:
             {
               //Edit Function
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => EditPostScreen(
+                    {
+                      "postId": _post.postId,
+                      "postText": _post.postText,
+                      "imageUrl": _post.postImage,
+                    },
+                  ),
+                ),
+              );
             }
             break;
 
