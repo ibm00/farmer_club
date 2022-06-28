@@ -57,6 +57,11 @@ class AddingCommentProvider extends ChangeNotifier {
     _isLoading(false);
   }
 
+  Future<bool> updateComment(Comment comment) async {
+    final isDone = await FireComments.updateComment(comment);
+    return isDone;
+  }
+
   bool isLoading = false;
   void _isLoading(bool loadingState) {
     isLoading = loadingState;

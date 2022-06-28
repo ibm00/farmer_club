@@ -54,6 +54,7 @@ class TextFieldWidget extends StatelessWidget {
 }
 
 final _outlineBorder = OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.grey[100]!),
-    borderRadius: BorderRadius.circular(15),
-    gapPadding: 0);
+  borderSide: BorderSide(color: Colors.grey[100]!),
+  borderRadius: BorderRadius.circular(15),
+  gapPadding: 0,
+);

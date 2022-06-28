@@ -47,7 +47,7 @@ class FireHome {
   static Future<bool> updatePost(Map postData) async {
     try {
       final postsCollection = firestoreInistance.collection('posts');
-      postsCollection.doc(postData["postId"]).update({
+      await postsCollection.doc(postData["postId"]).update({
         "postText": postData["postText"],
         "postImage": postData["imageUrl"],
       });

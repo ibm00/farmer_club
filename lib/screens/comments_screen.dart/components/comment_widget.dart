@@ -7,6 +7,7 @@ import '../../../data/models/comment_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../comments_provider.dart';
+import 'edit_comment_widget.dart';
 
 class CommentWidget extends StatelessWidget {
   final Comment comment;
@@ -47,13 +48,36 @@ class CommentWidget extends StatelessWidget {
           style: kTextStyleReg13.copyWith(color: Colors.black)),
       trailing: comment.isMyComment
           ? Consumer(builder: (context, ref, _) {
-              return InkWell(
-                  onTap: () async {
-                    await ref
-                        .read(addingCommentProvider(comment.postId!))
-                        .deleteComment(context, comment);
-                  },
-                  child: const Icon(Icons.delete));
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      await ref
+                          .read(addingCommentProvider(comment.postId!))
+                          .deleteComment(context, comment);
+                    },
+                    child: const Icon(Icons.delete, color: Colors.red),
+                  ),
+                  const SizedBox(width: 30),
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => EditCommentWidget(comment),
+                      );
+                    },
+                    child: const Icon(Icons.edit, color: kPrimaryColor),
+                  ),
+                ].reversed.toList(),
+              );
             })
           : null,
     );

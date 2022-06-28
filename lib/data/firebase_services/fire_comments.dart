@@ -40,6 +40,22 @@ class FireComments {
     }
   }
 
+  static Future<bool> updateComment(Comment comment) async {
+    try {
+      final commentCollection =
+          _firestoreInistance.collection('posts/${comment.postId}/comments');
+      await commentCollection.doc(comment.commentId).update({
+        "commentText": comment.commentText,
+      });
+
+      return true;
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+      return false;
+    }
+  }
+
   static Future<bool> deleteComment(Comment comment) async {
     try {
       // print('posts/${comment.postId}/comments/${comment.commentId}');

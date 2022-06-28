@@ -7,10 +7,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'components/comment_widget.dart';
 
-class CommentsScreen extends StatelessWidget {
+class CommentsScreen extends StatefulWidget {
   static const routeName = "/comment-screen";
   final String postId;
   const CommentsScreen({Key? key, required this.postId}) : super(key: key);
+
+  @override
+  State<CommentsScreen> createState() => _CommentsScreenState();
+}
+
+class _CommentsScreenState extends State<CommentsScreen> {
+  // FocusNode focusNode = FocusNode();
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   focusNode.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +30,7 @@ class CommentsScreen extends StatelessWidget {
       appBar: const AppBarWidget(title: 'التعليقات'),
       body: Consumer(
         builder: (context, ref, child) {
-          final commentProv = ref.watch(getCommentsProvider(postId));
+          final commentProv = ref.watch(getCommentsProvider(widget.postId));
           return commentProv.when(
             data: (comments) => ListView.builder(
               itemCount: comments.length,
@@ -33,7 +45,8 @@ class CommentsScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Consumer(
         builder: (context, ref, _) {
-          final addingCommentProv = ref.read(addingCommentProvider(postId));
+          final addingCommentProv =
+              ref.read(addingCommentProvider(widget.postId));
           return Padding(
             padding: const EdgeInsets.all(8.0).copyWith(
               bottom: MediaQuery.of(context).viewInsets.bottom + 8,
@@ -42,6 +55,7 @@ class CommentsScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextFieldWidget(
+                    // focusNode: focusNode,
                     controller: addingCommentProv.commentController,
                     hintText: "أكتب تعليقك هنا...",
                   ),
