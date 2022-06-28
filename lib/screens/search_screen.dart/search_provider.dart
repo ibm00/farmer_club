@@ -47,7 +47,6 @@ class SearchProvider extends ChangeNotifier {
     );
     if (followingAndFollowers == null) return null;
     _updateFollowingNumOnUI(followingAndFollowers['currentUserFollowingNum']);
-    _updateFollowerNumOnUI(followingAndFollowers['otherUserFollowersNum']);
     return followingAndFollowers['otherUserFollowersNum'];
   }
 
@@ -59,15 +58,10 @@ class SearchProvider extends ChangeNotifier {
     );
     if (followingAndFollowers == null) return null;
     _updateFollowingNumOnUI(followingAndFollowers['currentUserFollowingNum']);
-    _updateFollowerNumOnUI(followingAndFollowers['otherUserFollowersNum']);
     return followingAndFollowers['otherUserFollowersNum'];
   }
 
   void _updateFollowingNumOnUI(int currentUserFollowingNum) {
     reader(userDataProvider).updateFollowingNum(currentUserFollowingNum);
-  }
-
-  void _updateFollowerNumOnUI(int otherUserFollowersNum) {
-    reader(userDataProvider).updateFollowerNum(otherUserFollowersNum);
   }
 }

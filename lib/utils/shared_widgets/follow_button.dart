@@ -67,11 +67,8 @@ class _FollowButtonState extends State<FollowButton> {
       isFollowState = !isFollowState;
     });
     if (isFollowState) {
-      final int? otherUserFollowersNum = await reader(
-        searchProvider,
-      ).onFollowPressed(
-        otherUserID,
-      );
+      final int? otherUserFollowersNum =
+          await reader(searchProvider).onFollowPressed(otherUserID);
 
       if (otherUserFollowersNum == null) {
         setState(() {
@@ -81,9 +78,7 @@ class _FollowButtonState extends State<FollowButton> {
       return otherUserFollowersNum;
     } else {
       final int? otherUserFollowersNum =
-          await reader(searchProvider).onUnFollowPressed(
-        otherUserID,
-      );
+          await reader(searchProvider).onUnFollowPressed(otherUserID);
       if (otherUserFollowersNum == null) {
         setState(() {
           isFollowState = !isFollowState;
