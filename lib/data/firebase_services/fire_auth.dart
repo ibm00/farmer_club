@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_club/data/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/login_screen/login_screen.dart';
@@ -78,6 +81,22 @@ class FireAuth {
       "followersNum": user.followersNum,
       "postsNum": user.postsNum,
     });
+  }
+
+  static Future<String?> uploadUserImage({
+    required File userImage,
+  }) async {
+    try {
+      final imageReference = FirebaseStorage.instance.ref().child(
+            'users_images/${userImage.path.split('/').last}',
+          );
+      await imageReference.putFile(userImage);
+      final imgUrl = await imageReference.getDownloadURL();
+      return imgUrl;
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   // static Future<void> sign

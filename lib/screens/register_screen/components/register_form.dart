@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/helpers/validators.dart';
+import '../../../utils/constants/styles.dart';
+import '../../../utils/helpers/image_link_helper.dart';
 import '../../../utils/shared_widgets/button_widget.dart';
 import '../../../utils/shared_widgets/icons_wrapper.dart';
 import '../../../utils/shared_widgets/text_field_widget.dart';
@@ -16,7 +18,44 @@ class RegisterForm extends ConsumerWidget {
       key: registerProv.formKey,
       child: Column(
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 50),
+          Consumer(builder: (context, ref, _) {
+            final ImageProvider? userImage = ref.watch(
+              registerProvider.select((value) => value.userImage),
+            );
+            return CircleAvatar(
+              radius: 50,
+              backgroundColor: const Color.fromARGB(145, 238, 62, 8),
+              backgroundImage: userImage ??
+                  const AssetImage("assets/images/default-profile-pic.jpg"),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: InkWell(
+                  onTap: () {
+                    ref.read(registerProvider).pickImage(context);
+                  },
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  child: Container(
+                    width: 100,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50),
+                        bottomRight: Radius.circular(50),
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.camera_alt,
+                      color: kBackgroundColor,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+          const SizedBox(height: 30),
           Row(
             children: [
               const IconWrapper(Icons.person_outline_rounded),

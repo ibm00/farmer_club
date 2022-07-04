@@ -10,16 +10,14 @@ class UserModel extends ChangeNotifier {
   int postsNum;
   bool isCurrentUserFollowThisUser = false;
 
-  UserModel({
-    this.name,
-    this.email,
-    this.userId,
-    this.followingsNum = 0,
-    this.followersNum = 0,
-    this.postsNum = 0,
-    this.imageUrl =
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-  });
+  UserModel(
+      {this.name,
+      this.email,
+      this.userId,
+      this.followingsNum = 0,
+      this.followersNum = 0,
+      this.postsNum = 0,
+      this.imageUrl = ""});
 
   void updatePostsNum(int postsNum) {
     this.postsNum = postsNum;
