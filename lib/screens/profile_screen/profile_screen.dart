@@ -111,13 +111,12 @@ class EntireContent extends StatelessWidget {
             ),
             child: ProfileBody(userProv, isMyProfile: isMyProfile),
           ),
-          const Positioned(
+          Positioned(
             top: -80,
             child: ImageAvatarWidget(
               radius: 125 / 2,
               borderThikness: 6,
-              imageUrl:
-                  "https://www.naso.org/wp-content/uploads/2016/12/person-pointing.jpg",
+              imageUrl: userProv.imageUrl,
             ),
           ),
         ],
