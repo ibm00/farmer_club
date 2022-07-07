@@ -1,4 +1,4 @@
-package com.example.farmer_club
+package com.zagazig.farmerClub
 
 import io.flutter.embedding.android.FlutterActivity
 
