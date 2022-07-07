@@ -12,7 +12,6 @@ class RegisterScreen extends StatelessWidget {
   static const String routeName = '/register-screen';
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
         child: Consumer(builder: (context, ref, _) {

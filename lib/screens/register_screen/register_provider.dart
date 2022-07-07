@@ -128,4 +128,19 @@ class UserProvider extends ChangeNotifier {
     isLoading = loadingState;
     notifyListeners();
   }
+
+  int binarySearch(L, left, right, x) {
+    if (left > right) {
+      return -1;
+    }
+    int mid = (left + right) ~/ 2;
+    if (L[mid] == x) {
+      return mid;
+    }
+    if (L[mid] < x) {
+      return binarySearch(L, mid + 1, right, x);
+    } else {
+      return binarySearch(L, left, mid - 1, x);
+    }
+  }
 }
