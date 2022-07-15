@@ -1,3 +1,4 @@
+import 'package:farmer_club/screens/register_screen/components/policy_privacy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -124,6 +125,23 @@ class RegisterForm extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 30),
+          const Text("عندما تضغط على تسجيل فأنت توافق على"),
+          InkWell(
+            onTap: (() {
+              showDialog(
+                context: context,
+                builder: (context) => const PrivacyPolicyDialog(),
+              );
+            }),
+            child: const Text(
+              "سياسة الاستخدام والخصوصية الخاصة بنا",
+              style: TextStyle(
+                color: Colors.green,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
           ButtonWidget(
             width: double.infinity,
             onButtonPressed: () {
