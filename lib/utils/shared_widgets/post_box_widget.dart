@@ -59,15 +59,15 @@ class PostBoxWidget extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                if (_post.isMyPost)
-                  InkWell(
-                    onTap: () {},
-                    onTapDown: (details) => showPopupMenu(context, details),
-                    child: const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.grey,
-                    ),
+                // if (_post.isMyPost)
+                InkWell(
+                  onTap: () {},
+                  onTapDown: (details) => showPopupMenu(context, details),
+                  child: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.grey,
                   ),
+                ),
               ],
             ),
             if (_post.postText != "")
@@ -147,8 +147,10 @@ class PostBoxWidget extends StatelessWidget {
               PopupMenuItem<int>(child: Text('مسح'), value: 2),
             ]
           : const [
-              PopupMenuItem<int>(child: Text('Save Post'), value: 1),
-              PopupMenuItem<int>(child: Text('Report Post'), value: 2),
+              PopupMenuItem<int>(child: Text('الإبلاغ عن المنشور'), value: 1),
+              PopupMenuItem<int>(
+                  child: Text('الإبلاغ عن صاحب المنشور'), value: 2),
+              PopupMenuItem<int>(child: Text('حظر صاحب المنشور'), value: 4),
             ],
       elevation: 10.0,
     ).then<void>((int? itemSelected) {
@@ -183,13 +185,18 @@ class PostBoxWidget extends StatelessWidget {
         switch (itemSelected) {
           case 1:
             {
-              //Save Post Function
+              //report Post Function
             }
             break;
 
           case 2:
             {
-              //Report Post Function
+              //Report Post owner
+            }
+            break;
+          case 3:
+            {
+              //block Post owner
             }
             break;
         }
